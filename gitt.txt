@@ -1,0 +1,6 @@
+cara push ke github
+
+git add .
+git commit -m "last nich"
+git status
+git push -u origin main
