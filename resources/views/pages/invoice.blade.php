@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="mb-6 flex justify-between items-center">
-            <a href="{{ route('invoice.download', $order->order_code) }}" target="_blank" class="px-4 py-2 bg-brand-teal text-white rounded hover:bg-teal-700">
+            <a href="{{ route('invoice.download', $order->order_code) }}" class="px-4 py-2 bg-brand-teal text-white rounded hover:bg-teal-700">
                 <i class="fas fa-download mr-2"></i>Download Invoice
             </a>
         </div>
@@ -63,14 +63,9 @@
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="bg-white p-3 rounded border">
-                    <div class="font-semibold text-gray-800">Bank BCA</div>
-                    <div class="text-lg font-mono text-gray-900">1234567890</div>
-                    <div class="text-sm text-gray-600">a.n. PT. MKU</div>
-                </div>
-                <div class="bg-white p-3 rounded border">
                     <div class="font-semibold text-gray-800">Bank Mandiri</div>
-                    <div class="text-lg font-mono text-gray-900">0987654321</div>
-                    <div class="text-sm text-gray-600">a.n. PT. MKU</div>
+                    <div class="text-lg font-mono text-gray-900">006-00-1297862-7</div>
+                    <div class="text-sm text-gray-600">a.n. PT.IDOLA MULIA UTAMA KCP. Jakarta Matraman</div>
                 </div>
             </div>
             <div class="mt-3 text-sm text-blue-700">

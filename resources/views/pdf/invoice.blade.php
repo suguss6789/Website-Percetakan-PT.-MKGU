@@ -217,7 +217,7 @@
     <!-- Print/Download Buttons -->
     <button class="print-button no-print" onclick="window.print()">🖨️ Print Invoice</button>
     <button class="download-button no-print" onclick="downloadAsPDF()">📄 Save as PDF</button>
-    <a href="javascript:history.back()" class="back-button no-print">← Kembali</a>
+    <a href="{{ route('invoice.show', $order->order_code) }}" class="back-button no-print">← Kembali</a>
 
     <div class="header">
         <div class="company-name">PT. Multi Karya Grafika Utama</div>
@@ -293,16 +293,10 @@
     </div>
 
     <div class="payment-info">
-        <div class="payment-title">Informasi Pembayaran</div>
-        <div class="bank-info">
-            <div class="bank-name">Bank BCA</div>
-            <div class="account-number">1234567890</div>
-            <div>a.n. PT. MKGU</div>
-        </div>
         <div class="bank-info">
             <div class="bank-name">Bank Mandiri</div>
-            <div class="account-number">0987654321</div>
-            <div>a.n. PT. MKGU</div>
+            <div class="account-number">006-00-1297862-7</div>
+            <div>a.n. PT.IDOLA MULIA UTAMA KCP. Jakarta Matraman</div>
         </div>
         <div style="font-size: 14px; color: #666; margin-top: 8px;">
             <strong>Catatan:</strong> Mohon transfer sesuai total di atas. Upload bukti transfer melalui halaman invoice ini.

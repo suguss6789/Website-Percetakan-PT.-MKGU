@@ -9,9 +9,10 @@
     <div x-data="{
         images: [
             '{{ asset('assets/image/logo_bg.png') }}',
-            '{{ asset('assets/image/logo_bg_2.png') }}',
-            '{{ asset('assets/image/logo_bg_3.png') }}'
+            '{{ asset('assets/image/logo_bground_2.png') }}',
+            '{{ asset('assets/image/logo_bground_3.png') }}'
         ],
+
         index: 0,
         timer: null,
         start() {
@@ -99,7 +100,7 @@
                 <!-- BPOM -->
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
                     <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Badan_Pengawas_Obat_dan_Makanan_logo.svg/1200px-Badan_Pengawas_Obat_dan_Makanan_logo.svg.png" 
+                        <img src="https://3.bp.blogspot.com/-vcT2Pzz-DjI/Wg0U-M_XbHI/AAAAAAAAE84/4fgQJRFLFm4tu2qkPHuPwMES0G35qx2QQCLcBGAs/s1600/Badan%252BPOM.jpg" 
                              alt="BPOM - Badan Pengawas Obat dan Makanan" 
                              class="max-h-full max-w-full object-contain">
                     </div>
@@ -112,7 +113,7 @@
                 <!-- Huawei -->
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
                     <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Huawei_Logo.svg/2560px-Huawei_Logo.svg.png" 
+                        <img src="https://logos-world.net/wp-content/uploads/2020/04/Huawei-Logo-2018-present.jpg" 
                              alt="Huawei Technologies" 
                              class="max-h-full max-w-full object-contain">
                     </div>
@@ -125,7 +126,7 @@
                 <!-- Kementerian Kesehatan -->
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
                     <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kementerian_Kesehatan_Republik_Indonesia_logo.svg/1200px-Kementerian_Kesehatan_Republik_Indonesia_logo.svg.png" 
+                        <img src="https://1.bp.blogspot.com/-CLiP1hfgUpY/XRDxHKHs2lI/AAAAAAAAIiU/N9MdyOH5GrMM2hQeNiN34QNOHgegkEOXQCLcBGAs/s1600/Kemenkes%252BRI%252B%25255Bwww.blogovector.com%25255D.png" 
                              alt="Kementerian Kesehatan RI" 
                              class="max-h-full max-w-full object-contain">
                     </div>
@@ -134,70 +135,6 @@
                         <p class="text-sm text-gray-600">Kementerian Kesehatan RI</p>
                     </div>
                 </div>
-
-                <!-- Telkom Indonesia -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
-                    <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Telkom_Indonesia_logo.svg/2560px-Telkom_Indonesia_logo.svg.png" 
-                             alt="Telkom Indonesia" 
-                             class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div class="text-center mt-4">
-                        <h3 class="font-semibold text-gray-800">Telkom</h3>
-                        <p class="text-sm text-gray-600">PT. Telkom Indonesia</p>
-                    </div>
-                </div>
-
-                <!-- Pertamina -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
-                    <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Pertamina_logo.svg/2560px-Pertamina_logo.svg.png" 
-                             alt="Pertamina" 
-                             class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div class="text-center mt-4">
-                        <h3 class="font-semibold text-gray-800">Pertamina</h3>
-                        <p class="text-sm text-gray-600">PT. Pertamina (Persero)</p>
-                    </div>
-                </div>
-
-                <!-- Bank Indonesia -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
-                    <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Bank_Indonesia_logo.svg/2560px-Bank_Indonesia_logo.svg.png" 
-                             alt="Bank Indonesia" 
-                             class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div class="text-center mt-4">
-                        <h3 class="font-semibold text-gray-800">BI</h3>
-                        <p class="text-sm text-gray-600">Bank Indonesia</p>
-                    </div>
-                </div>
-
-                <!-- PLN -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
-                    <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/PLN_logo.svg/2560px-PLN_logo.svg.png" 
-                             alt="PLN" 
-                             class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div class="text-center mt-4">
-                        <h3 class="font-semibold text-gray-800">PLN</h3>
-                        <p class="text-sm text-gray-600">PT. PLN (Persero)</p>
-                    </div>
-                </div>
-
-                <!-- Garuda Indonesia -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
-                    <div class="flex items-center justify-center h-24">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Garuda_Indonesia_logo.svg/2560px-Garuda_Indonesia_logo.svg.png" 
-                             alt="Garuda Indonesia" 
-                             class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div class="text-center mt-4">
-                        <h3 class="font-semibold text-gray-800">Garuda</h3>
-                        <p class="text-sm text-gray-600">PT. Garuda Indonesia</p>
-                    </div>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@
                 <th class="py-2 px-4">Status Order</th>
                 <th class="py-2 px-4">Status Pembayaran</th>
                 <th class="py-2 px-4">Desain</th>
+                <th class="py-2 px-4">Bukti Pembayaran</th>
                 <th class="py-2 px-4">Tanggal</th>
                 <th class="py-2 px-4">Aksi</th>
             </tr>
@@ -67,6 +68,31 @@
                         </div>
                     @else
                         <span class="text-gray-400 text-xs">Tidak ada desain</span>
+                    @endif
+                </td>
+                <td class="py-2 px-4">
+                    @if($order->payment_proof)
+                        @php
+                            $fileExtension = strtolower(pathinfo($order->payment_proof, PATHINFO_EXTENSION));
+                            $isImage = in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']);
+                        @endphp
+                        <div class="flex items-center space-x-2">
+                            @if($isImage)
+                                <i class="fas fa-image text-green-600"></i>
+                            @elseif($fileExtension === 'pdf')
+                                <i class="fas fa-file-pdf text-red-600"></i>
+                            @else
+                                <i class="fas fa-file text-blue-600"></i>
+                            @endif
+                            <a href="{{ route('admin.orders.show', $order) }}#payment-proof" 
+                               class="text-blue-600 hover:underline text-xs">
+                                Lihat Bukti
+                            </a>
+                        </div>
+                    @else
+                        <span class="text-gray-400 text-xs">
+                            <i class="fas fa-times-circle mr-1"></i>Belum ada
+                        </span>
                     @endif
                 </td>
                 <td class="py-2 px-4">{{ $order->created_at->format('d M Y') }}</td>

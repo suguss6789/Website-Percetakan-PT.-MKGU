@@ -49,4 +49,19 @@ class OrderAdminController extends Controller
         $order->load('details.product');
         return view('admin.orders.designs', compact('order'));
     }
+
+    public function downloadPaymentProof(Order $order)
+    {
+        if (!$order->payment_proof) {
+            return redirect()->back()->with('error', 'Bukti pembayaran tidak ditemukan.');
+        }
+
+        $filePath = storage_path('app/public/' . $order->payment_proof);
+        
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File bukti pembayaran tidak ditemukan.');
+        }
+
+        return response()->download($filePath, 'bukti_pembayaran_' . $order->order_code . '.' . pathinfo($order->payment_proof, PATHINFO_EXTENSION));
+    }
 } 

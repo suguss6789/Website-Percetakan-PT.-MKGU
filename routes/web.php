@@ -66,6 +66,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::resource('categories', CategoryAdminController::class);
     Route::resource('orders', OrderAdminController::class);
     Route::get('orders/{order}/designs', [OrderAdminController::class, 'designs'])->name('orders.designs');
+    Route::get('orders/{order}/download-payment-proof', [OrderAdminController::class, 'downloadPaymentProof'])->name('orders.download-payment-proof');
     Route::resource('customers', CustomerAdminController::class); // support all CRUD
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
     Route::delete('products/{product}', [ProductAdminController::class, 'destroy'])->name('products.destroy');

@@ -6,18 +6,34 @@
 <!-- ===== TENTANG KAMI SECTION ===== -->
 <section id="tentang" class="py-20 bg-gray-50">
     <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
-                <img src="https://placehold.co/800x600/e2e8f0/334155?text=MKGU+Team" alt="Tentang MKGU" class="rounded-lg shadow-xl w-full">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold text-gray-800 mb-6">Kenapa Memilih Kami?</h2>
             </div>
-            <div class="md:w-1/2">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">Kenapa Memilih Kami?</h2>
-                <p class="text-gray-600 mb-4 leading-relaxed">
-                    Kami tidak hanya menawarkan kualitas yang prima melainkan juga harga yang kompetitif. Sinergi antara desainer yang profesional dan berpengalaman, teknologi desain yang up-to-date, serta didukung oleh para mitra percetakan dengan teknologi mesin printing yang modern.
+            
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                    Multi Karya Grafika Utama adalah solusi terbaik untuk Anda yang membutuhkan jasa cetak dan lainnya 
+                    di Jakarta. Dengan teknologi cetak terkini, tim profesional yang berdedikasi, dan harga yang kompetitif, 
+                    kami siap memenuhi segala kebutuhan cetak Anda. Apapun jenis produk yang ingin Anda cetak, kami akan memastikan 
+                    hasil akhirnya memuaskan. Jangan ragu untuk menghubungi kami dan konsultasikan kebutuhan Anda. Kami, 
+                    solusi salah satu mitra cetak terbaik di Jakarta!
                 </p>
-                <p class="text-gray-600 mb-6 leading-relaxed">
-                    Hal ini menjadikan waktu untuk produksi cetak lebih efisien dan bisa membantu memenuhi target waktu yang dijadwalkan. Kami memberikan kemudahan komunikasi dan koordinasi untuk solusi kebutuhan desain dan cetak Anda.
-                </p>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-lg">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Hubungi Kami</h3>
+                    <p class="text-lg text-gray-700 mb-4">
+                        Untuk informasi lebih lanjut dan konsultasi, silakan hubungi tim kami di:
+                    </p>
+                    <div class="space-y-2">
+                        <p class="text-lg font-medium text-blue-600">
+                            📞 0812-9727-9919
+                        </p>
+                        <p class="text-lg font-medium text-blue-600">
+                            📧 mkgu.jakarta@gmail.com
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

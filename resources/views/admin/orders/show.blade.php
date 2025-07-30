@@ -99,6 +99,89 @@
     <div class="mb-4 text-right font-bold text-brand-teal">
                         Total: Rp{{ number_format($order->total_amount, 0, ',', '.') }}
     </div>
+    
+    <!-- Bukti Pembayaran Section -->
+    <div class="mb-6" id="payment-proof">
+        <div class="font-semibold mb-3 text-lg text-brand-teal">
+            <i class="fas fa-receipt mr-2"></i>Bukti Pembayaran
+        </div>
+        @if($order->payment_proof)
+            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                        <span class="text-green-800 font-semibold">Bukti pembayaran telah diupload</span>
+                    </div>
+                    <span class="text-sm text-green-600">{{ $order->updated_at->format('d M Y H:i') }}</span>
+                </div>
+                
+                <div class="flex flex-col space-y-3">
+                    @php
+                        $fileExtension = strtolower(pathinfo($order->payment_proof, PATHINFO_EXTENSION));
+                        $isImage = in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']);
+                    @endphp
+                    
+                    @if($isImage)
+                        <!-- Image Preview -->
+                        <div class="flex flex-col space-y-2">
+                            <img src="{{ asset('storage/' . $order->payment_proof) }}" 
+                                 alt="Bukti Pembayaran" 
+                                 class="max-w-xs h-auto rounded shadow cursor-pointer hover:opacity-75 transition-opacity"
+                                 onclick="openPaymentProofModal('{{ asset('storage/' . $order->payment_proof) }}', '{{ basename($order->payment_proof) }}')">
+                            
+                            <div class="flex space-x-2">
+                                <button onclick="openPaymentProofModal('{{ asset('storage/' . $order->payment_proof) }}', '{{ basename($order->payment_proof) }}')"
+                                        class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+                                    <i class="fas fa-eye mr-1"></i>Review Bukti Pembayaran
+                                </button>
+                                <a href="{{ route('admin.orders.download-payment-proof', $order) }}" 
+                                   class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition">
+                                    <i class="fas fa-download mr-1"></i>Download Bukti Pembayaran
+                                </a>
+                            </div>
+                        </div>
+                    @else
+                        <!-- File Preview -->
+                        <div class="flex flex-col space-y-2">
+                            <div class="bg-gray-100 p-3 rounded border">
+                                <div class="flex items-center">
+                                    @if($fileExtension === 'pdf')
+                                        <i class="fas fa-file-pdf text-red-500 mr-2 text-xl"></i>
+                                    @else
+                                        <i class="fas fa-file text-gray-500 mr-2 text-xl"></i>
+                                    @endif
+                                    <div>
+                                        <div class="font-semibold text-gray-800">{{ basename($order->payment_proof) }}</div>
+                                        <div class="text-sm text-gray-600">{{ strtoupper($fileExtension) }} File</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-2">
+                                <a href="{{ asset('storage/' . $order->payment_proof) }}" 
+                                   target="_blank"
+                                   class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
+                                    <i class="fas fa-eye mr-1"></i>Review Bukti Pembayaran
+                                </a>
+                                <a href="{{ route('admin.orders.download-payment-proof', $order) }}" 
+                                   class="px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition">
+                                    <i class="fas fa-download mr-1"></i>Download Bukti Pembayaran
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @else
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+                    <span class="text-yellow-800">Belum ada bukti pembayaran yang diupload</span>
+                </div>
+            </div>
+        @endif
+    </div>
+    
     <div class="flex justify-end">
         <a href="{{ route('admin.orders.index') }}" class="px-4 py-2 rounded bg-gray-200 text-gray-700 hover:bg-gray-300">Kembali</a>
     </div>
@@ -122,6 +205,31 @@
                 <i class="fas fa-download"></i> Download
             </a>
             <button onclick="closeImageModal()" 
+                    class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Proof Modal -->
+<div id="paymentProofModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg max-w-4xl max-h-full overflow-auto relative">
+        <div class="flex justify-between items-center p-4 border-b">
+            <h3 id="paymentProofModalTitle" class="text-lg font-semibold text-gray-800"></h3>
+            <button onclick="closePaymentProofModal()" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">
+                &times;
+            </button>
+        </div>
+        <div class="p-4">
+            <img id="paymentProofModalImage" src="" alt="Bukti Pembayaran Preview" class="max-w-full h-auto">
+        </div>
+        <div class="flex justify-end p-4 border-t space-x-2">
+            <a href="{{ route('admin.orders.download-payment-proof', $order) }}" 
+               class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
+                <i class="fas fa-download"></i> Download
+            </a>
+            <button onclick="closePaymentProofModal()" 
                     class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
                 Tutup
             </button>
@@ -155,6 +263,32 @@ document.getElementById('imageModal').addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeImageModal();
+    }
+});
+
+function openPaymentProofModal(imageSrc, fileName) {
+    document.getElementById('paymentProofModalImage').src = imageSrc;
+    document.getElementById('paymentProofModalTitle').textContent = 'Preview Bukti Pembayaran: ' + fileName;
+    document.getElementById('paymentProofModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePaymentProofModal() {
+    document.getElementById('paymentProofModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+document.getElementById('paymentProofModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closePaymentProofModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closePaymentProofModal();
     }
 });
 </script>
