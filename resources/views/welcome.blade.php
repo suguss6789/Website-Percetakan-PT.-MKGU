@@ -123,16 +123,29 @@
                     </div>
                 </div>
 
-                <!-- Kementerian Kesehatan -->
+                <!-- JEEVES -->
                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
                     <div class="flex items-center justify-center h-24">
-                        <img src="https://1.bp.blogspot.com/-CLiP1hfgUpY/XRDxHKHs2lI/AAAAAAAAIiU/N9MdyOH5GrMM2hQeNiN34QNOHgegkEOXQCLcBGAs/s1600/Kemenkes%252BRI%252B%25255Bwww.blogovector.com%25255D.png" 
-                             alt="Kementerian Kesehatan RI" 
+                        <img src="https://www.jeeves-indonesia.com/images/logo-black.webp" 
+                             alt="Jeeves Laundry" 
                              class="max-h-full max-w-full object-contain">
                     </div>
                     <div class="text-center mt-4">
-                        <h3 class="font-semibold text-gray-800">Kemenkes</h3>
-                        <p class="text-sm text-gray-600">Kementerian Kesehatan RI</p>
+                        <h3 class="font-semibold text-gray-800">JEEVES</h3>
+                        <p class="text-sm text-gray-600">JEEVES Indonesia operates</p>
+                    </div>
+                </div>
+
+                <!-- SKIN+ -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex-shrink-0 w-64">
+                    <div class="flex items-center justify-center h-24">
+                        <img src="https://tse2.mm.bing.net/th/id/OIP.7grf7Fbm5sV3-NogQr-vlgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" 
+                             alt="SKIN+" 
+                             class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div class="text-center mt-4">
+                        <h3 class="font-semibold text-gray-800">SKIN +</h3>
+                        <p class="text-sm text-gray-600">By euromedica</p>
                     </div>
                 </div>
                 </div>
