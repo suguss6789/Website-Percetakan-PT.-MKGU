@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<!-- <div class="space-y-6">
     <div class="border-b pb-4">
         <h4 class="text-lg font-semibold text-gray-800">Order: {{ $order->order_code }}</h4>
         <p class="text-sm text-gray-600">Pelanggan: {{ $order->customer_name }}</p>
@@ -19,7 +19,7 @@
                         <p class="text-sm text-gray-600 mb-3">Jumlah: {{ $detail->quantity }}</p>
                         
                         @if(Str::endsWith(strtolower($detail->design_file), ['.jpg', '.jpeg', '.png']))
-                            <!-- Image Design -->
+                            <!-- Image Design --
                             <div class="space-y-3">
                                 <img src="{{ asset('storage/' . $detail->design_file) }}" 
                                      alt="Desain {{ $detail->product->name ?? 'Produk' }}" 
@@ -39,7 +39,7 @@
                                 </div>
                             </div>
                         @elseif(Str::endsWith(strtolower($detail->design_file), ['.pdf']))
-                            <!-- PDF Design -->
+                            <!-- PDF Design --
                             <div class="space-y-3">
                                 <div class="bg-gray-100 p-4 rounded border text-center">
                                     <i class="fas fa-file-pdf text-red-500 text-4xl mb-2"></i>
@@ -53,7 +53,7 @@
                                 </a>
                             </div>
                         @else
-                            <!-- Other File Types -->
+                            <!-- Other File Types --
                             <div class="space-y-3">
                                 <div class="bg-gray-100 p-4 rounded border text-center">
                                     <i class="fas fa-file text-gray-500 text-4xl mb-2"></i>
@@ -79,7 +79,7 @@
     @endif
 </div>
 
-<!-- Image Modal for Designs -->
+<!-- Image Modal for Designs --
 <div id="designImageModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg max-w-4xl max-h-full overflow-auto relative">
         <div class="flex justify-between items-center p-4 border-b">
@@ -132,4 +132,4 @@ document.addEventListener('keydown', function(e) {
         closeDesignImageModal();
     }
 });
-</script> 
+</script>  -->

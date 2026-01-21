@@ -11,7 +11,8 @@
             <div><span class="font-semibold">Nama:</span> {{ $order->customer_name }}</div>
             <div><span class="font-semibold">Email:</span> {{ $order->customer_email }}</div>
             <div><span class="font-semibold">No WhatsApp:</span> {{ $order->customer_phone }}</div>
-            <div><span class="font-semibold">Tanggal:</span> {{ $order->created_at->format('d M Y H:i') }}</div>
+            <div class="font-semibold">Tanggal Order:</div>
+            <div>{{ $order->created_at->format('d M Y H:i') }}</div>
             <div><span class="font-semibold">Status Order:</span> 
                 <span class="px-2 py-1 rounded {{ $order->status_color }}">
                     {{ $order->status_label }}
@@ -48,11 +49,7 @@
                 Total: Rp{{ number_format($order->total_amount, 0, ',', '.') }}
             </div>
         </div>
-        <div class="mb-6 flex justify-between items-center">
-            <a href="{{ route('invoice.download', $order->order_code) }}" class="px-4 py-2 bg-brand-teal text-white rounded hover:bg-teal-700">
-                <i class="fas fa-download mr-2"></i>Download Invoice
-            </a>
-        </div>
+       
         
         <hr class="my-6">
         

@@ -216,11 +216,11 @@
 <body>
     <!-- Print/Download Buttons -->
     <button class="print-button no-print" onclick="window.print()">🖨️ Print Invoice</button>
-    <button class="download-button no-print" onclick="downloadAsPDF()">📄 Save as PDF</button>
-    <a href="{{ route('invoice.show', $order->order_code) }}" class="back-button no-print">← Kembali</a>
+    <button class="download-button no-print" onclick="window.print()">📄 Print/Save as PDF</button>
+    <a href="{{ route('admin.orders.show', $order->id) }}" class="back-button no-print">← Kembali</a>
 
     <div class="header">
-        <div class="company-name">PT. Multi Karya Grafika Utama</div>
+        <div class="company-name">Multi Karya Grafika Utama</div>
         <div class="company-tagline">Solusi Printing & Digital Marketing Terpercaya</div>
     </div>
 
@@ -281,8 +281,8 @@
             <tr>
                 <td>{{ $detail->product->name ?? 'Produk' }}</td>
                 <td>{{ $detail->quantity }}</td>
-                                        <td>Rp{{ number_format($detail->price, 0, ',', '.') }}</td>
-                        <td>Rp{{ number_format($detail->price * $detail->quantity, 0, ',', '.') }}</td>
+                <td>Rp{{ number_format($detail->price, 0, ',', '.') }}</td>
+                <td>Rp{{ number_format($detail->price * $detail->quantity, 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -305,29 +305,9 @@
 
     <div class="footer">
         <p style="margin: 5px 0; font-size: 14px;">Terima kasih telah mempercayakan kebutuhan printing & digital marketing Anda kepada kami.</p>
-        <p style="margin: 5px 0; font-size: 14px;">PT. Multi Karya Grafika Utama - Solusi Printing & Digital Marketing Terpercaya</p>
-        <p style="margin: 5px 0; font-size: 14px;">Email: info@ptmku.com | WhatsApp: +62 812-3456-7890</p>
+        <p style="margin: 5px 0; font-size: 14px;">Multi Karya Grafika Utama - Solusi Printing & Digital Marketing Terpercaya</p>
+        <p style="margin: 5px 0; font-size: 14px;">Email: mkgu.jakarta@gmail.com | WhatsApp: +62 812-9727-9919
+        </p>
     </div>
-
-    <script>
-    function downloadAsPDF() {
-        // Create a new window for printing
-        var printWindow = window.open("", "_blank");
-        printWindow.document.write(document.documentElement.outerHTML);
-        printWindow.document.close();
-        
-        // Wait a bit for content to load, then print
-        setTimeout(function() {
-            printWindow.print();
-        }, 500);
-    }
-    
-    // Auto-print when page loads (optional)
-    // window.onload = function() {
-    //     setTimeout(function() {
-    //         window.print();
-    //     }, 1000);
-    // }
-    </script>
 </body>
 </html> 

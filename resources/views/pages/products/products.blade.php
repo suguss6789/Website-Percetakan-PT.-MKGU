@@ -29,8 +29,7 @@
                             <p class="text-sm text-gray-500 mb-1">{{ $product->category->name ?? 'Tanpa Kategori' }}</p>
                             <h3 class="text-lg font-bold text-gray-800 truncate">{{ $product->name }}</h3>
                             <p class="text-brand-teal font-semibold text-xl mt-2">
-                                Rp{{number_format($product->price, 0, ',', '.')}}
-                                <span class="text-sm font-normal text-gray-500">/pcs</span>
+                                Mulai dari Rp{{ number_format($product->base_price, 0, ',', '.') }}
                             </p>
                         </div>
                     </a>

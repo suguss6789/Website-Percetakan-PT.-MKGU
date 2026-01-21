@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 
 @section('title', 'Tambah Pelanggan')
 @section('page-title', 'Tambah Pelanggan')
@@ -31,4 +31,4 @@
         </div>
     </form>
 </div>
-@endsection 
+@endsection  -->

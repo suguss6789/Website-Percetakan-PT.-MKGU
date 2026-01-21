@@ -44,7 +44,7 @@ Route::post('/produk/{product:slug}', [ProductController::class, 'handleFormSubm
 // Route untuk menampilkan invoice dan mengupload konfirmasi pembayaran setelah order. Route: /invoice/{order_code} dan POST /invoice/{order_code}/confirm.
 Route::get('/invoice/{order_code}', [ProductController::class, 'invoice'])->name('invoice.show');
 Route::post('/invoice/{order_code}/confirm', [ProductController::class, 'confirmPayment'])->name('invoice.confirm');
-Route::get('/invoice/{order_code}/download', [ProductController::class, 'downloadInvoice'])->name('invoice.download');
+// Route::get('/invoice/{order_code}/download', [ProductController::class, 'downloadInvoice'])->name('invoice.download');
 
 
 // ===== ROUTE LOGIN ADMIN ONLY =====
@@ -67,6 +67,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->name('admin.')->group(
     Route::resource('orders', OrderAdminController::class);
     Route::get('orders/{order}/designs', [OrderAdminController::class, 'designs'])->name('orders.designs');
     Route::get('orders/{order}/download-payment-proof', [OrderAdminController::class, 'downloadPaymentProof'])->name('orders.download-payment-proof');
+    Route::get('orders/{order}/download-invoice', [OrderAdminController::class, 'downloadInvoice'])->name('orders.download-invoice');
     Route::resource('customers', CustomerAdminController::class); // support all CRUD
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
     Route::delete('products/{product}', [ProductAdminController::class, 'destroy'])->name('products.destroy');

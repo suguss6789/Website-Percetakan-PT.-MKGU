@@ -28,24 +28,72 @@ class ProductAdminController extends Controller
             'slug' => 'required|string|max:255|unique:products,slug',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'cover_image' => 'nullable|image|max:2048',
+            'base_price' => 'required|numeric|min:0',
+            'cover_image' => 'nullable|image|max:4096',
+            'size_names' => 'nullable|array',
+            'size_prices' => 'nullable|array',
+            'finishing_names' => 'nullable|array',
+            'finishing_prices' => 'nullable|array',
+            'material_names' => 'nullable|array',
+            'material_prices' => 'nullable|array',
         ]);
         
-        // Handle description field - convert empty string to null
         if (empty($validated['description'])) {
             $validated['description'] = null;
         }
         
-        // Handle cover_image field
+        $sizes = [];
+        if ($request->has('size_names') && $request->has('size_prices')) {
+            $sizeNames = $request->input('size_names');
+            $sizePrices = $request->input('size_prices');
+            for ($i = 0; $i < count($sizeNames); $i++) {
+                if (!empty($sizeNames[$i]) && !empty($sizePrices[$i])) {
+                    $sizes[] = [
+                        'name' => $sizeNames[$i],
+                        'price' => (float) $sizePrices[$i]
+                    ];
+                }
+            }
+        }
+        
+        $finishings = [];
+        if ($request->has('finishing_names') && $request->has('finishing_prices')) {
+            $finishingNames = $request->input('finishing_names');
+            $finishingPrices = $request->input('finishing_prices');
+            for ($i = 0; $i < count($finishingNames); $i++) {
+                if (!empty($finishingNames[$i]) && !empty($finishingPrices[$i])) {
+                    $finishings[] = [
+                        'name' => $finishingNames[$i],
+                        'price' => (float) $finishingPrices[$i]
+                    ];
+                }
+            }
+        }
+        
+        $materials = [];
+        if ($request->has('material_names') && $request->has('material_prices')) {
+            $materialNames = $request->input('material_names');
+            $materialPrices = $request->input('material_prices');
+            for ($i = 0; $i < count($materialNames); $i++) {
+                if (!empty($materialNames[$i]) && !empty($materialPrices[$i])) {
+                    $materials[] = [
+                        'name' => $materialNames[$i],
+                        'price' => (float) $materialPrices[$i]
+                    ];
+                }
+            }
+        }
+        
         if ($request->hasFile('cover_image')) {
             $validated['cover_image'] = $request->file('cover_image')->store('products', 'public');
         } else {
-            $validated['cover_image'] = null;
+            unset($validated['cover_image']);
         }
         
-        // Set default value for is_featured if not provided
         $validated['is_featured'] = $request->has('is_featured') ? true : false;
+        $validated['sizes'] = $sizes;
+        $validated['finishings'] = $finishings;
+        $validated['materials'] = $materials;
         
         try {
             Product::create($validated);
@@ -68,21 +116,71 @@ class ProductAdminController extends Controller
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
-            'price' => 'required|numeric',
-            'cover_image' => 'nullable|image|max:2048',
+            'base_price' => 'required|numeric|min:0',
+            'cover_image' => 'nullable|image|max:4096',
+            'size_names' => 'nullable|array',
+            'size_prices' => 'nullable|array',
+            'finishing_names' => 'nullable|array',
+            'finishing_prices' => 'nullable|array',
+            'material_names' => 'nullable|array',
+            'material_prices' => 'nullable|array',
         ]);
         
-        // Handle description field - convert empty string to null
         if (empty($validated['description'])) {
             $validated['description'] = null;
         }
         
-        // Handle cover_image field
+        $sizes = [];
+        if ($request->has('size_names') && $request->has('size_prices')) {
+            $sizeNames = $request->input('size_names');
+            $sizePrices = $request->input('size_prices');
+            for ($i = 0; $i < count($sizeNames); $i++) {
+                if (!empty($sizeNames[$i]) && !empty($sizePrices[$i])) {
+                    $sizes[] = [
+                        'name' => $sizeNames[$i],
+                        'price' => (float) $sizePrices[$i]
+                    ];
+                }
+            }
+        }
+        
+        $finishings = [];
+        if ($request->has('finishing_names') && $request->has('finishing_prices')) {
+            $finishingNames = $request->input('finishing_names');
+            $finishingPrices = $request->input('finishing_prices');
+            for ($i = 0; $i < count($finishingNames); $i++) {
+                if (!empty($finishingNames[$i]) && !empty($finishingPrices[$i])) {
+                    $finishings[] = [
+                        'name' => $finishingNames[$i],
+                        'price' => (float) $finishingPrices[$i]
+                    ];
+                }
+            }
+        }
+        
+        $materials = [];
+        if ($request->has('material_names') && $request->has('material_prices')) {
+            $materialNames = $request->input('material_names');
+            $materialPrices = $request->input('material_prices');
+            for ($i = 0; $i < count($materialNames); $i++) {
+                if (!empty($materialNames[$i]) && !empty($materialPrices[$i])) {
+                    $materials[] = [
+                        'name' => $materialNames[$i],
+                        'price' => (float) $materialPrices[$i]
+                    ];
+                }
+            }
+        }
+        
         if ($request->hasFile('cover_image')) {
             $validated['cover_image'] = $request->file('cover_image')->store('products', 'public');
         } else {
-            $validated['cover_image'] = null;
+            unset($validated['cover_image']);
         }
+        
+        $validated['sizes'] = $sizes;
+        $validated['finishings'] = $finishings;
+        $validated['materials'] = $materials;
         
         try {
             $product->update($validated);

@@ -45,35 +45,65 @@ class ProductController extends Controller
             'email' => 'required|email|max:255',
             'whatsapp' => 'required|string|max:20',
             'quantity' => 'required|integer|min:1',
+            'selected_size' => 'nullable|string',
+            'selected_finishing' => 'nullable|string',
+            'selected_material' => 'nullable|string',
             'notes' => 'nullable|string',
             'design_file' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
-        // Simpan ke tabel orders
+        $selectedPrice = $product->base_price;
+        $selectedSize = $validated['selected_size'] ?? null;
+        $selectedFinishing = $validated['selected_finishing'] ?? null;
+        $selectedMaterial = $validated['selected_material'] ?? null;
+
+        if ($selectedSize && $product->sizes) {
+            foreach ($product->sizes as $size) {
+                if ($size['name'] === $selectedSize) {
+                    $selectedPrice = $size['price'];
+                    break;
+                }
+            }
+        }
+        if ($selectedFinishing && $product->finishings) {
+            foreach ($product->finishings as $finishing) {
+                if ($finishing['name'] === $selectedFinishing) {
+                    $selectedPrice += $finishing['price'];
+                    break;
+                }
+            }
+        }
+        if ($selectedMaterial && $product->materials) {
+            foreach ($product->materials as $material) {
+                if ($material['name'] === $selectedMaterial) {
+                    $selectedPrice += $material['price'];
+                    break;
+                }
+            }
+        }
+
         $order = Order::create([
             'order_code'      => 'ORD-' . strtoupper(Str::random(8)),
             'customer_name'   => $validated['name'],
             'customer_email'  => $validated['email'],
             'customer_phone'  => $validated['whatsapp'],
             'status'          => 'quotation',
-            'total_amount'    => $product->price * $validated['quantity'],
+            'total_amount'    => $selectedPrice * $validated['quantity'],
             'payment_status'  => 'unpaid',
             'notes'           => $validated['notes'] ?? null,
         ]);
 
-        // Proses upload file desain jika ada
         $designFilePath = null;
         if ($request->hasFile('design_file')) {
             $designFilePath = $request->file('design_file')->store('designs', 'public');
         }
 
-        // Simpan ke tabel order_details
         OrderDetail::create([
             'order_id'      => $order->id,
             'product_id'    => $product->id,
             'quantity'      => $validated['quantity'],
-            'price'         => $product->price,
-            'specifications'=> $validated['notes'] ?? null,
+            'price'         => $selectedPrice,
+            'specifications'=> trim(($validated['notes'] ?? '') . ($selectedSize ? " | Ukuran: $selectedSize" : '') . ($selectedFinishing ? " | Finishing: $selectedFinishing" : '') . ($selectedMaterial ? " | Bahan: $selectedMaterial" : '')),
             'design_file'   => $designFilePath,
         ]);
 

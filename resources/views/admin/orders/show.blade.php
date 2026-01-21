@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 
 @section('title', 'Detail Order')
 @section('page-title', 'Detail Order')
@@ -39,19 +39,19 @@
                 <tr>
                     <td class="py-2 px-4">{{ $detail->product->name ?? '-' }}</td>
                     <td class="py-2 px-4">{{ $detail->quantity }}</td>
-                                            <td class="py-2 px-4">Rp{{ number_format($detail->price, 0, ',', '.') }}</td>
-                        <td class="py-2 px-4">Rp{{ number_format($detail->price * $detail->quantity, 0, ',', '.') }}</td>
+                    <td class="py-2 px-4">Rp{{ number_format($detail->price, 0, ',', '.') }}</td>
+                    <td class="py-2 px-4">Rp{{ number_format($detail->price * $detail->quantity, 0, ',', '.') }}</td>
                     <td class="py-2 px-4">
                         @if($detail->design_file)
                             @if(Str::endsWith(strtolower($detail->design_file), ['.jpg', '.jpeg', '.png']))
                                 <div class="flex flex-col space-y-2">
-                                    <!-- Thumbnail Preview -->
+                                    <!-- Thumbnail Preview --
                                     <img src="{{ asset('storage/' . $detail->design_file) }}" 
                                          alt="Desain" 
                                          class="h-16 w-16 object-cover rounded shadow cursor-pointer hover:opacity-75 transition-opacity"
                                          onclick="openImageModal('{{ asset('storage/' . $detail->design_file) }}', '{{ basename($detail->design_file) }}')">
                                     
-                                    <!-- Action Buttons -->
+                                    <!-- Action Buttons --
                                     <div class="flex space-x-1">
                                         <button onclick="openImageModal('{{ asset('storage/' . $detail->design_file) }}', '{{ basename($detail->design_file) }}')"
                                                 class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition">
@@ -96,11 +96,16 @@
             </tbody>
         </table>
     </div>
+    <div class="flex justify-end mb-4">
+        <a href="{{ route('admin.orders.download-invoice', $order) }}" class="px-4 py-2 rounded bg-brand-teal text-white font-bold hover:bg-teal-700 transition">
+            <i class="fas fa-file-download mr-2"></i>Download Invoice
+        </a>
+    </div>
     <div class="mb-4 text-right font-bold text-brand-teal">
                         Total: Rp{{ number_format($order->total_amount, 0, ',', '.') }}
     </div>
     
-    <!-- Bukti Pembayaran Section -->
+    <!-- Bukti Pembayaran Section --
     <div class="mb-6" id="payment-proof">
         <div class="font-semibold mb-3 text-lg text-brand-teal">
             <i class="fas fa-receipt mr-2"></i>Bukti Pembayaran
@@ -122,7 +127,7 @@
                     @endphp
                     
                     @if($isImage)
-                        <!-- Image Preview -->
+                        <!-- Image Preview --
                         <div class="flex flex-col space-y-2">
                             <img src="{{ asset('storage/' . $order->payment_proof) }}" 
                                  alt="Bukti Pembayaran" 
@@ -141,7 +146,7 @@
                             </div>
                         </div>
                     @else
-                        <!-- File Preview -->
+                        <!-- File Preview --
                         <div class="flex flex-col space-y-2">
                             <div class="bg-gray-100 p-3 rounded border">
                                 <div class="flex items-center">
@@ -187,7 +192,7 @@
     </div>
 </div>
 
-<!-- Image Modal -->
+<!-- Image Modal --
 <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg max-w-4xl max-h-full overflow-auto relative">
         <div class="flex justify-between items-center p-4 border-b">
@@ -212,7 +217,7 @@
     </div>
 </div>
 
-<!-- Payment Proof Modal -->
+<!-- Payment Proof Modal --
 <div id="paymentProofModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg max-w-4xl max-h-full overflow-auto relative">
         <div class="flex justify-between items-center p-4 border-b">
@@ -292,4 +297,4 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
-@endsection 
+@endsection  -->

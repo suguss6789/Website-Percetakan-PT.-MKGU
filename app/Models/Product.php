@@ -19,6 +19,16 @@ class Product extends Model
         'cover_image',
         'is_featured',
         'price',
+        'sizes',
+        'base_price',
+        'finishings',
+        'materials',
+    ];
+
+    protected $casts = [
+        'sizes' => 'array',
+        'finishings' => 'array',
+        'materials' => 'array',
     ];
 
     /**

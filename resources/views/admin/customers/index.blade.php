@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 
 @section('title', 'Daftar Pelanggan')
 @section('page-title', 'Pelanggan')
@@ -43,4 +43,4 @@
     </table>
     <div class="mt-4">{{ $customers->links() }}</div>
 </div>
-@endsection 
+@endsection  -->

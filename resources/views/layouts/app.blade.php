@@ -157,7 +157,7 @@
             </div>
         </div>
         <div class="mt-12 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-            <p>Copyright &copy; {{ date('Y') }} PT. Multi Karya Grafika Utama. All Right Reserved.</p>
+            <p>Copyright &copy; {{ date('Y') }} Multi Karya Grafika Utama. All Right Reserved.</p>
         </div>
     </div>
     

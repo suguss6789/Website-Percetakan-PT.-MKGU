@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 
 @section('title', 'Detail Pelanggan')
 @section('page-title', 'Detail Pelanggan')
@@ -60,4 +60,4 @@
         </tbody>
     </table>
 </div>
-@endsection 
+@endsection  -->

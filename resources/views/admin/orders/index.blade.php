@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+<!-- @extends('layouts.admin')
 
 @section('title', 'Manajemen Order')
 @section('page-title', 'Order')
@@ -112,7 +112,7 @@
     <div class="mt-4">{{ $orders->links() }}</div>
 </div>
 
-<!-- Order Designs Modal -->
+<!-- Order Designs Modal --
 <div id="orderDesignsModal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 flex items-center justify-center">
     <div class="bg-white rounded-lg max-w-6xl max-h-full overflow-auto relative">
         <div class="flex justify-between items-center p-4 border-b">
@@ -122,7 +122,7 @@
             </button>
         </div>
         <div id="orderDesignsContent" class="p-4">
-            <!-- Content will be loaded here -->
+            <!-- Content will be loaded here --
         </div>
     </div>
 </div>
@@ -164,4 +164,4 @@ document.addEventListener('keydown', function(e) {
     }
 });
 </script>
-@endsection 
+@endsection  -->

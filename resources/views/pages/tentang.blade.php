@@ -13,7 +13,7 @@
             
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <p class="text-lg text-gray-700 mb-6 leading-relaxed">
-                    Multi Karya Grafika Utama adalah solusi terbaik untuk Anda yang membutuhkan jasa cetak dan lainnya 
+                    Multi Karya Grafika Utama member of PT. Mulia Idola Utama adalah solusi terbaik untuk Anda yang membutuhkan jasa cetak dan lainnya 
                     di Jakarta. Dengan teknologi cetak terkini, tim profesional yang berdedikasi, dan harga yang kompetitif, 
                     kami siap memenuhi segala kebutuhan cetak Anda. Apapun jenis produk yang ingin Anda cetak, kami akan memastikan 
                     hasil akhirnya memuaskan. Jangan ragu untuk menghubungi kami dan konsultasikan kebutuhan Anda. Kami, 

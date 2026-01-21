@@ -19,7 +19,7 @@
                 <div class="p-8 md:p-12 flex items-center">
                     <div>
                         <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                            Wujudkan Semua Kebutuhan Promosi Anda di PT. Multi Karya Grafika Utama!
+                            Wujudkan Semua Kebutuhan Promosi Anda di Multi Karya Grafika Utama!
                         </h2>
                         <p class="text-lg text-gray-700 leading-relaxed">
                             Kami adalah mitra terpercaya untuk semua kebutuhan cetak dan promosi bisnis Anda. 
@@ -83,7 +83,7 @@
          <!-- Call to Action -->
          <div class="bg-brand-teal rounded-2xl p-8 text-center text-white">
              <h3 class="text-3xl font-bold mb-4">
-                 PT. Multi Karya Grafika Utama
+                Multi Karya Grafika Utama
              </h3>
              <p class="text-xl mb-6">
                  Satu Solusi untuk Semua Kebutuhan Cetak dan Promosi Anda

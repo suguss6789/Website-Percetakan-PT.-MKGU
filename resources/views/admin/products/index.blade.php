@@ -15,42 +15,55 @@
     <table class="w-full table-auto">
         <thead>
             <tr class="bg-brand-teal text-white">
-                <th class="px-4 py-2">No</th>
-                <th class="px-4 py-2">Nama</th>
-                <th class="px-4 py-2">Slug</th>
-                <th class="px-4 py-2">Gambar</th>
-                <th class="px-4 py-2">Kategori</th>
-                <th class="px-4 py-2">Harga</th>
-                <th class="px-4 py-2">Aksi</th>
+                <th class="border px-4 py-2">No</th>
+                <th class="border px-4 py-2">Gambar</th>
+                <th class="border px-4 py-2">Nama Produk</th>
+                <th class="border px-4 py-2">Kategori</th>
+                <th class="border px-4 py-2">Harga Dasar</th>
+                <th class="border px-4 py-2">Ukuran</th>
+                <th class="border px-4 py-2">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($products as $i => $product)
+            @forelse($products as $index => $product)
             <tr>
-                <td class="border px-4 py-2">{{ $products->firstItem() + $i }}</td>
-                <td class="border px-4 py-2">{{ $product->name }}</td>
-                <td class="border px-4 py-2">{{ $product->slug }}</td>
+                <td class="border px-4 py-2">{{ $index + 1 }}</td>
                 <td class="border px-4 py-2">
                     @if($product->image_url)
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-12 w-12 object-cover rounded">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded">
                     @else
-                        -
+                        <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
+                            <span class="text-gray-500 text-xs">No Image</span>
+                        </div>
                     @endif
                 </td>
+                <td class="border px-4 py-2">{{ $product->name }}</td>
                 <td class="border px-4 py-2">{{ $product->category->name ?? '-' }}</td>
-                <td class="border px-4 py-2">Rp{{ number_format($product->price, 0, ',', '.') }}</td>
+                <td class="border px-4 py-2">Rp{{ number_format($product->base_price, 0, ',', '.') }}</td>
+                <td class="border px-4 py-2">
+                    @if($product->sizes)
+                        @foreach($product->sizes as $size)
+                            <div class="text-sm">
+                                <span class="font-semibold">{{ $size['name'] }}:</span> 
+                                Rp{{ number_format($size['price'], 0, ',', '.') }}
+                            </div>
+                        @endforeach
+                    @else
+                        <span class="text-gray-500">-</span>
+                    @endif
+                </td>
                 <td class="border px-4 py-2">
                     <a href="{{ route('admin.products.edit', $product->id) }}" class="text-blue-500 hover:underline">Edit</a>
-                    <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="inline ml-2">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="text-red-500 hover:underline ml-2" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
+                        <button type="submit" class="text-red-500 hover:underline" onclick="return confirm('Yakin ingin menghapus produk ini?')">Hapus</button>
                     </form>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="7" class="text-center py-4">Belum ada produk.</td>
+                <td colspan="7" class="border px-4 py-2 text-center">Tidak ada produk.</td>
             </tr>
             @endforelse
         </tbody>

@@ -13,15 +13,15 @@
         <div class="text-3xl font-bold text-brand-teal mb-2">{{ $totalCategories }}</div>
         <div class="text-gray-600">Kategori</div>
     </div>
-    <div class="bg-white rounded shadow p-6 text-center">
+    <!--<div class="bg-white rounded shadow p-6 text-center">
         <div class="text-3xl font-bold text-brand-teal mb-2">{{ $totalOrders }}</div>
         <div class="text-gray-600">Order</div>
     </div>
     <div class="bg-white rounded shadow p-6 text-center">
         <div class="text-3xl font-bold text-brand-teal mb-2">{{ $totalCustomers }}</div>
         <div class="text-gray-600">Pelanggan</div>
-    </div>
-</div>
+    </div>-->
+<!-- </div>
 <div class="bg-white rounded shadow p-6 mb-8">
     <h3 class="text-lg font-bold text-brand-teal mb-4">Order Terbaru</h3>
     <div class="overflow-x-auto">
@@ -59,6 +59,6 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
-</div>
+    </div> -->
+<!-- </div> -->
 @endsection 

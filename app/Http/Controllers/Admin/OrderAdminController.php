@@ -64,4 +64,11 @@ class OrderAdminController extends Controller
 
         return response()->download($filePath, 'bukti_pembayaran_' . $order->order_code . '.' . pathinfo($order->payment_proof, PATHINFO_EXTENSION));
     }
+
+    public function downloadInvoice(Order $order)
+    {
+        $order->load('details.product');
+        // Return the invoice view directly (bisa diganti dengan PDF jika ingin)
+        return view('pdf.invoice', compact('order'));
+    }
 } 
