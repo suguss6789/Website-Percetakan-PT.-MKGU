@@ -29,7 +29,7 @@
                 </p>
                 <p class="text-gray-600 leading-relaxed mb-6">{!! nl2br(e($product->description)) !!}</p>
 
-                <!-- @if($product->sizes)
+                @if($product->sizes)
                     <div class="mb-6">
                         <h4 class="text-lg font-semibold text-gray-800 mb-3">Pilihan Ukuran:</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -155,7 +155,7 @@
                             </button>
                         </div>
                     </form>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
