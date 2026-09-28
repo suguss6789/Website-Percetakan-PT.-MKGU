@@ -51,10 +51,10 @@
     </div>
 
     <header data-header x-data="{ open: false }" @keydown.escape.window="open = false"
-        class="group sticky top-0 z-40 border-b border-transparent bg-paper/95 backdrop-blur transition-colors data-[scrolled]:border-line">
+        class="group sticky top-0 z-40 border-b border-transparent bg-paper transition-colors data-[scrolled]:border-line">
         <div class="container-page flex h-[76px] items-center justify-between gap-6 transition-all group-data-[scrolled]:h-16">
             <a href="{{ route('home') }}" class="shrink-0" aria-label="{{ $siteName }} — beranda">
-                <img src="{{ asset('assets/image/logo-transparan.png') }}" alt="{{ $siteName }}" width="228" height="119" class="h-11 w-auto transition-all group-data-[scrolled]:h-9">
+                <img src="{{ asset('assets/image/logo-transparan.png') }}" alt="{{ $siteName }}" width="274" height="108" class="h-11 w-auto transition-all group-data-[scrolled]:h-9">
             </a>
 
             <nav class="hidden items-center gap-8 lg:flex" aria-label="Menu utama">
@@ -111,7 +111,7 @@
         <div class="container-page grid gap-12 py-16 md:grid-cols-12">
             <div class="md:col-span-5">
                 <div class="inline-block rounded bg-paper p-3">
-                    <img src="{{ asset('assets/image/logo.png') }}" alt="{{ $siteName }}" class="h-12 w-auto" loading="lazy">
+                    <img src="{{ asset('assets/image/logo-transparan.png') }}" alt="{{ $siteName }}" class="h-12 w-auto" loading="lazy">
                 </div>
                 <p class="mt-6 max-w-sm text-[15px] leading-relaxed text-paper/70">{{ setting('tagline') }}</p>
                 <p class="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/50">Member of {{ setting('company_parent', 'PT. Mulia Idola Utama') }}</p>
