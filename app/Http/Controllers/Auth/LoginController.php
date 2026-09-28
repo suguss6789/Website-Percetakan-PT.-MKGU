@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-
     public function showLoginForm()
     {
         return view('auth.login');
@@ -19,26 +19,16 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-        $user = \App\Models\Admin::where('email', $credentials['email'])->first();
-        $hashCheck = $user ? \Illuminate\Support\Facades\Hash::check($credentials['password'], $user->password) : null;
-        $success = \Illuminate\Support\Facades\Auth::attempt(array_merge($credentials, ['role' => 'admin']), $request->filled('remember'));
-        if ($success) {
+
+        if (Auth::attempt([...$credentials, 'role' => 'admin'], $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard');
+
+            return redirect()->intended(route('admin.dashboard'));
         }
-        // Debug info jika login gagal
-        dd([
-            'input' => $credentials,
-            'user' => $user,
-            'hash_check' => $hashCheck,
-            'auth_attempt' => $success,
-            'session_id' => session()->getId(),
-            'session_driver' => config('session.driver'),
-            'session_path' => storage_path('framework/sessions'),
-        ]);
-        return back()->withErrors([
-            'email' => 'Hanya admin yang dapat login.',
-        ]);
+
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => 'Email atau password salah.']);
     }
 
     public function logout(Request $request)
@@ -46,6 +36,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/admin/login');
+
+        return redirect()->route('login');
     }
 }

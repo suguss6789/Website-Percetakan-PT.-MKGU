@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Models\Category;
-use App\Models\Order;
+use App\Models\Product;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalProducts = Product::count();
-        $totalCategories = Category::count();
-        $totalOrders = Order::count();
-        $totalCustomers = Order::distinct('customer_email')->count('customer_email');
-        $recentOrders = Order::orderByDesc('created_at')->limit(5)->get();
-        return view('admin.dashboard', compact('totalProducts', 'totalCategories', 'totalOrders', 'totalCustomers', 'recentOrders'));
+        return view('admin.dashboard', [
+            'activeCount' => Product::active()->count(),
+            'hiddenCount' => Product::where('is_active', false)->count(),
+            'categoryCount' => Category::count(),
+            'featuredCount' => Product::active()->featured()->count(),
+            'recent' => Product::with('category')->latest('updated_at')->take(5)->get(),
+            'noImage' => Product::whereNull('cover_image')->orderBy('name')->get(['id', 'name']),
+            'noPrice' => Product::doesntHave('sizes')->orderBy('name')->get(['id', 'name']),
+        ]);
     }
-} 
+}

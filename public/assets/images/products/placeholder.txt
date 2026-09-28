@@ -1,3 +1,0 @@
-Folder ini untuk menyimpan gambar produk.
-Gambar yang diupload melalui admin panel akan disimpan di storage/app/public/products/
-Gambar dari seeder menggunakan path assets/images/products/ 

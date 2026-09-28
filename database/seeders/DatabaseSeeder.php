@@ -3,18 +3,15 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run()
+    public function run(): void
     {
         $this->call([
             AdminSeeder::class,
-            MasterProductSeeder::class,
+            SettingSeeder::class,
+            CatalogSeeder::class,
         ]);
     }
 }

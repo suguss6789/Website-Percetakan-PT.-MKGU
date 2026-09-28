@@ -2,19 +2,24 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
+/**
+ * Akun admin diambil dari .env (ADMIN_EMAIL, ADMIN_PASSWORD),
+ * jadi tidak ada password yang tersimpan di repositori.
+ */
 class AdminSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        \App\Models\Admin::create([
-            'name' => 'Admin',
-            'email' => 'Luthfi83*#@admin1.com',
-            'password' => bcrypt('Luthf18379*#'),
-            'role' => 'admin',
-        ]);
+        Admin::updateOrCreate(
+            ['email' => env('ADMIN_EMAIL', 'admin@mkgu.test')],
+            [
+                'name' => env('ADMIN_NAME', 'Admin MKGU'),
+                'password' => env('ADMIN_PASSWORD', 'ganti-password-ini'),
+                'role' => 'admin',
+            ]
+        );
     }
 }

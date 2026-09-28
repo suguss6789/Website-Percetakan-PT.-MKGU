@@ -1,171 +1,166 @@
+@php
+    $siteName = setting('company_name', 'Multi Karya Grafika Utama');
+    $pageTitle = trim($__env->yieldContent('title'));
+    $fullTitle = $pageTitle ? "{$pageTitle} — {$siteName}" : "{$siteName} · Percetakan di Jakarta Timur";
+    $metaDescription = trim($__env->yieldContent('description')) ?: setting('tagline');
+    $ogImage = trim($__env->yieldContent('og_image')) ?: asset('assets/image/logo_bg.png');
+    $nav = [
+        ['home', 'Beranda'],
+        ['about', 'Tentang'],
+        ['services', 'Layanan'],
+        ['products.index', 'Produk'],
+        ['contact', 'Kontak'],
+    ];
+    $isActive = fn ($route) => request()->routeIs($route) || ($route === 'products.index' && request()->routeIs('products.*'));
+@endphp
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'MITRA KARYA GRAFIKA UTAMA - Mitra Advertising Indonesia')</title>
-    <meta name="description" content="Multi Karya Grafika Utama (MKGU) adalah perusahaan Offset Printing, Digital Printing & Advertising untuk instansi pemerintah dan swasta.">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ $fullTitle }}</title>
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit($metaDescription, 160) }}">
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta name="theme-color" content="#067A35">
 
-    <style>
-        /* Warna Kustom Baru Sesuai Brand MKGU */
-        .bg-brand-teal { background-color: #00A99D; }
-        .text-brand-teal { color: #00A99D; }
-        .border-brand-teal { border-color: #00A99D; }
-        .ring-brand-teal { --tw-ring-color: #00A99D; }
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:title" content="{{ $fullTitle }}">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit($metaDescription, 160) }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:locale" content="id_ID">
 
-        body { font-family: 'Roboto', sans-serif; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 
-        /* Custom Scrollbar Styles */
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* Smooth Scroll */
-        .overflow-x-auto {
-            scroll-behavior: smooth;
-        }
-
-        /* Responsive Navigation Buttons */
-        @media (max-width: 768px) {
-            #scrollLeft, #scrollRight {
-                width: 40px;
-                height: 40px;
-                padding: 8px;
-            }
-            #scrollLeft svg, #scrollRight svg {
-                width: 20px;
-                height: 20px;
-            }
-        }
-    </style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('head')
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="flex min-h-screen flex-col">
+    <a href="#konten" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-brand-yellow focus:px-4 focus:py-2 focus:font-semibold">Lewati ke konten</a>
 
-    <!-- ===== HEADER ===== -->
-    <header x-data="{ mobileMenuOpen: false }" class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto p-4 flex justify-between items-center">
-            <!-- Logo -->
-            <div>
-                <a href="{{ route('home') }}">
-                    <img src="{{ asset('assets/image/logo.png') }}" alt="Logo MKGU" class="h-10">
+    {{-- Strip info ala job ticket --}}
+    <div class="hidden border-b border-line bg-paper-dark md:block">
+        <div class="container-page flex h-9 items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+            <span class="flex items-center gap-2"><x-icon name="map-pin" class="h-3.5 w-3.5" /> {{ \Illuminate\Support\Str::before(setting('address', ''), ',') }}, Jakarta Timur</span>
+            <span class="flex items-center gap-5">
+                <span class="flex items-center gap-2"><x-icon name="clock" class="h-3.5 w-3.5" /> {{ setting('hours_weekday') }}</span>
+                <a href="mailto:{{ setting('email') }}" class="hover:text-ink">{{ setting('email') }}</a>
+            </span>
+        </div>
+    </div>
+
+    <header data-header x-data="{ open: false }" @keydown.escape.window="open = false"
+        class="group sticky top-0 z-40 border-b border-transparent bg-paper/95 backdrop-blur transition-colors data-[scrolled]:border-line">
+        <div class="container-page flex h-[76px] items-center justify-between gap-6 transition-all group-data-[scrolled]:h-16">
+            <a href="{{ route('home') }}" class="shrink-0" aria-label="{{ $siteName }} — beranda">
+                <img src="{{ asset('assets/image/logo-transparan.png') }}" alt="{{ $siteName }}" width="228" height="119" class="h-11 w-auto transition-all group-data-[scrolled]:h-9">
+            </a>
+
+            <nav class="hidden items-center gap-8 lg:flex" aria-label="Menu utama">
+                @foreach ($nav as [$route, $label])
+                    <a href="{{ route($route) }}" @class([
+                        'relative py-1 text-[15px] font-semibold transition-colors',
+                        'text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-brand-yellow' => $isActive($route),
+                        'text-ink-muted hover:text-ink' => ! $isActive($route),
+                    ]) @if($isActive($route)) aria-current="page" @endif>{{ $label }}</a>
+                @endforeach
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <a href="{{ wa_link('Halo MKGU, saya ingin konsultasi cetak.') }}" target="_blank" rel="noopener" class="btn-primary hidden sm:inline-flex">
+                    <x-icon name="whatsapp" class="h-4 w-4" /> Hubungi Kami
                 </a>
-            </div>
-
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('home') }}" class="text-gray-600 hover:text-brand-teal">Beranda</a>
-                <a href="{{ route('layanan') }}" class="text-gray-600 hover:text-brand-teal">Layanan</a>
-                <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-brand-teal">Produk</a>
-                <a href="{{ route('about') }}" class="text-gray-600 hover:text-brand-teal">Tentang Kami</a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-700 focus:outline-none">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded border border-line lg:hidden" @click="open = true" aria-label="Buka menu" :aria-expanded="open">
+                    <x-icon name="menu" />
                 </button>
             </div>
-        </nav>
+        </div>
 
-        <!-- Mobile Menu Dropdown -->
-        <div x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" class="md:hidden bg-white shadow-lg" x-transition>
-            <a href="{{ route('home') }}" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-brand-teal">Beranda</a>
-            <a href="{{ route('layanan') }}" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-brand-teal">Layanan</a>
-            <a href="{{ route('products.index') }}" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-brand-teal">Produk</a>
-            <a href="{{ route('about') }}" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-brand-teal">Tentang Kami</a>
-            <a href="#partner" class="block px-6 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-brand-teal">Partner</a>
+        {{-- Menu HP: layar penuh --}}
+        <div x-cloak x-show="open" x-transition.opacity class="fixed inset-0 z-50 flex flex-col bg-paper lg:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+            <div class="brand-bar"></div>
+            <div class="container-page flex h-[76px] items-center justify-between">
+                <img src="{{ asset('assets/image/logo-transparan.png') }}" alt="" class="h-10 w-auto">
+                <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded border border-line" @click="open = false" aria-label="Tutup menu">
+                    <x-icon name="x" />
+                </button>
+            </div>
+            <nav class="container-page mt-4 flex flex-1 flex-col" aria-label="Menu utama">
+                @foreach ($nav as $i => [$route, $label])
+                    <a href="{{ route($route) }}" class="flex items-baseline gap-4 border-b border-line py-4">
+                        <span class="font-mono text-xs text-ink-soft">0{{ $i + 1 }}</span>
+                        <span @class(['font-display text-4xl font-bold', 'text-brand-green-deep' => $isActive($route)])>{{ $label }}</span>
+                    </a>
+                @endforeach
+            </nav>
+            <div class="container-page pb-8 pt-6">
+                <a href="{{ wa_link('Halo MKGU, saya ingin konsultasi cetak.') }}" target="_blank" rel="noopener" class="btn-wa w-full">
+                    <x-icon name="whatsapp" class="h-5 w-5" /> Chat WhatsApp · {{ wa_display() }}
+                </a>
+            </div>
         </div>
     </header>
 
-    <main>
+    <main id="konten" class="flex-1">
         @yield('content')
     </main>
 
-    <!-- ===== FOOTER ===== -->
-<footer class="bg-gray-900 text-white" id="partner">
-    <div class="container mx-auto px-6 py-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            
-            <!-- Kolom 1: Info Perusahaan & Jam Operasional -->
-            <div>
-                <h3 class="text-xl font-semibold mb-2">Multi Karya Grafika Utama</h3>
-                <p class="text-gray-400">Member of <span class="ttext-xl font-semibold">PT. Mulia Idola Utama</span>
-                <h4 class="font-semibold text-lg mb-2">Jam Operasional:</h4>
-                <p class="text-gray-400">Senin–Jumat: 08.00 – 17.00</p>
-                <p class="text-gray-400">Sabtu: 08.00 – 15.00</p>
+    <footer class="mt-auto bg-ink text-paper">
+        <div class="brand-bar"></div>
+        <div class="container-page grid gap-12 py-16 md:grid-cols-12">
+            <div class="md:col-span-5">
+                <div class="inline-block rounded bg-paper p-3">
+                    <img src="{{ asset('assets/image/logo.png') }}" alt="{{ $siteName }}" class="h-12 w-auto" loading="lazy">
+                </div>
+                <p class="mt-6 max-w-sm text-[15px] leading-relaxed text-paper/70">{{ setting('tagline') }}</p>
+                <p class="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/50">Member of {{ setting('company_parent', 'PT. Mulia Idola Utama') }}</p>
             </div>
 
-            <!-- Kolom 2: Layanan -->
-            <div>
-                <h3 class="text-lg font-semibold mb-4">Layanan Kami</h3>
-                <ul class="space-y-2">
-                    @foreach(\App\Models\Category::all() as $category)
-                        <li>
-                            <a href="#layanan" class="text-gray-400 hover:text-brand-teal transition-colors">
-                                {{ $category->name }}
-                            </a>
-                        </li>
+            <div class="md:col-span-3">
+                <h2 class="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-brand-yellow">Produk</h2>
+                <ul class="mt-4 space-y-2.5 text-[15px]">
+                    @foreach ($footerCategories as $cat)
+                        <li><a href="{{ route('products.index', ['kategori' => $cat->slug]) }}" class="text-paper/80 hover:text-white hover:underline">{{ $cat->name }}</a></li>
                     @endforeach
+                    <li><a href="{{ route('products.index') }}" class="text-paper/80 hover:text-white hover:underline">Semua produk</a></li>
                 </ul>
             </div>
 
-            <!-- Kolom 3: Hubungi Kami -->
-            <div>
-                <h3 class="text-lg font-semibold mb-4">Silakan hubungi kami:</h3>
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 mr-3 mt-1 text-brand-teal flex-shrink-0" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                            <span class="text-gray-400">
-                                <a href="https://maps.app.goo.gl/kgGSgWKyeEP6AYaT9">
-                                    Jl. Pisangan Lama II No.5B, Pisangan Timur, Jakarta Timur</a></span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 mr-3 mt-0.5 text-brand-teal flex-shrink-0" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        <span class="text-gray-400">0812-9727-9919</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 mr-3 mt-0.5 text-brand-teal flex-shrink-0" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        <span class="text-gray-400">mkgu.jakarta@gmail.com</span>
-                    </li>
+            <div class="md:col-span-4">
+                <h2 class="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-brand-yellow">Kontak</h2>
+                <ul class="mt-4 space-y-3 text-[15px] text-paper/80">
+                    <li class="flex gap-3"><x-icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><a href="{{ setting('maps_link', '#') }}" target="_blank" rel="noopener" class="hover:text-white">{{ setting('address') }}</a></li>
+                    <li class="flex gap-3"><x-icon name="whatsapp" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><a href="{{ wa_link() }}" target="_blank" rel="noopener" class="hover:text-white">{{ wa_display() }}</a></li>
+                    <li class="flex gap-3"><x-icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><a href="mailto:{{ setting('email') }}" class="hover:text-white">{{ setting('email') }}</a></li>
+                    <li class="flex gap-3"><x-icon name="clock" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><span>{{ setting('hours_weekday') }}<br>{{ setting('hours_saturday') }}</span></li>
                 </ul>
+                @php $socials = array_filter(['instagram' => setting('instagram'), 'facebook' => setting('facebook'), 'music' => setting('tiktok')]); @endphp
+                @if ($socials)
+                    <div class="mt-5 flex gap-2">
+                        @foreach ($socials as $icon => $url)
+                            <a href="{{ $url }}" target="_blank" rel="noopener" class="inline-flex h-10 w-10 items-center justify-center rounded border border-paper/20 hover:border-paper/60" aria-label="{{ $icon === 'music' ? 'TikTok' : ucfirst($icon) }}"><x-icon :name="$icon" class="h-4 w-4" /></a>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
-        <div class="mt-12 border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-            <p>Copyright &copy; {{ date('Y') }} Multi Karya Grafika Utama. All Right Reserved.</p>
+        <div class="border-t border-paper/10">
+            <div class="container-page flex flex-col gap-2 py-5 text-xs text-paper/50 sm:flex-row sm:items-center sm:justify-between">
+                <span>© {{ date('Y') }} {{ $siteName }}. Hak cipta dilindungi.</span>
+                <span class="font-mono uppercase tracking-[0.12em]">Dicetak dengan teliti di Jakarta Timur</span>
+            </div>
         </div>
-    </div>
-    
-    <!-- Tombol WhatsApp Mengambang -->
-   <a href="https://wa.me/6281297279919" target="_blank"
-   class="fixed bottom-5 right-5 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 z-50">
-    <img src="https://www.svgrepo.com/show/431393/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
-</a>
-</footer>
+    </footer>
+
+    {{-- Tombol WhatsApp melayang --}}
+    <a href="{{ wa_link('Halo MKGU, saya ingin konsultasi cetak.') }}" target="_blank" rel="noopener"
+        class="fixed bottom-5 right-5 z-30 inline-flex h-14 items-center gap-2 rounded-full bg-brand-orange px-4 text-ink shadow-[0_6px_20px_-6px_rgba(27,31,26,.45)] transition hover:-translate-y-0.5 sm:px-5"
+        aria-label="Chat WhatsApp">
+        <x-icon name="whatsapp" class="h-6 w-6" />
+        <span class="hidden text-[15px] font-semibold sm:inline">Chat</span>
+    </a>
+
+    @stack('scripts')
 </body>
 </html>

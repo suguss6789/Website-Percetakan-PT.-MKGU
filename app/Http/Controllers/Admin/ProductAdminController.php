@@ -3,197 +3,153 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
+use App\Services\ImageService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductAdminController extends Controller
 {
-    public function index()
+    public function __construct(private ImageService $images)
     {
-        $products = Product::with('category')->latest()->paginate(12);
-        return view('admin.products.index', compact('products'));
+    }
+
+    public function index(Request $request)
+    {
+        $categories = Category::ordered()->get();
+        $search = trim((string) $request->query('q'));
+
+        $products = Product::with(['category', 'sizes'])
+            ->when($request->query('kategori'), fn ($q, $id) => $q->where('category_id', $id))
+            ->when($search !== '', fn ($q) => $q->where('name', 'like', "%{$search}%"))
+            ->when($request->query('status') === 'aktif', fn ($q) => $q->where('is_active', true))
+            ->when($request->query('status') === 'nonaktif', fn ($q) => $q->where('is_active', false))
+            ->ordered()
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.products.index', compact('products', 'categories', 'search'));
     }
 
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.products.create', compact('categories'));
+        return view('admin.products.form', [
+            'product' => new Product(['is_active' => true]),
+            'categories' => Category::ordered()->get(),
+        ]);
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug',
-            'description' => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-            'base_price' => 'required|numeric|min:0',
-            'cover_image' => 'nullable|image|max:4096',
-            'size_names' => 'nullable|array',
-            'size_prices' => 'nullable|array',
-            'finishing_names' => 'nullable|array',
-            'finishing_prices' => 'nullable|array',
-            'material_names' => 'nullable|array',
-            'material_prices' => 'nullable|array',
-        ]);
-        
-        if (empty($validated['description'])) {
-            $validated['description'] = null;
-        }
-        
-        $sizes = [];
-        if ($request->has('size_names') && $request->has('size_prices')) {
-            $sizeNames = $request->input('size_names');
-            $sizePrices = $request->input('size_prices');
-            for ($i = 0; $i < count($sizeNames); $i++) {
-                if (!empty($sizeNames[$i]) && !empty($sizePrices[$i])) {
-                    $sizes[] = [
-                        'name' => $sizeNames[$i],
-                        'price' => (float) $sizePrices[$i]
-                    ];
-                }
-            }
-        }
-        
-        $finishings = [];
-        if ($request->has('finishing_names') && $request->has('finishing_prices')) {
-            $finishingNames = $request->input('finishing_names');
-            $finishingPrices = $request->input('finishing_prices');
-            for ($i = 0; $i < count($finishingNames); $i++) {
-                if (!empty($finishingNames[$i]) && !empty($finishingPrices[$i])) {
-                    $finishings[] = [
-                        'name' => $finishingNames[$i],
-                        'price' => (float) $finishingPrices[$i]
-                    ];
-                }
-            }
-        }
-        
-        $materials = [];
-        if ($request->has('material_names') && $request->has('material_prices')) {
-            $materialNames = $request->input('material_names');
-            $materialPrices = $request->input('material_prices');
-            for ($i = 0; $i < count($materialNames); $i++) {
-                if (!empty($materialNames[$i]) && !empty($materialPrices[$i])) {
-                    $materials[] = [
-                        'name' => $materialNames[$i],
-                        'price' => (float) $materialPrices[$i]
-                    ];
-                }
-            }
-        }
-        
-        if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request->file('cover_image')->store('products', 'public');
-        } else {
-            unset($validated['cover_image']);
-        }
-        
-        $validated['is_featured'] = $request->has('is_featured') ? true : false;
-        $validated['sizes'] = $sizes;
-        $validated['finishings'] = $finishings;
-        $validated['materials'] = $materials;
-        
-        try {
-            Product::create($validated);
-            return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan!');
-        } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Gagal menambahkan produk: ' . $e->getMessage()]);
-        }
+        $product = DB::transaction(function () use ($request) {
+            $product = Product::create($this->payload($request));
+            $this->syncRelations($product, $request);
+
+            return $product;
+        });
+
+        return redirect()->route('admin.products.edit', $product)->with('status', "Produk “{$product->name}” berhasil ditambahkan.");
     }
 
     public function edit(Product $product)
     {
-        $categories = Category::all();
-        return view('admin.products.edit', compact('product', 'categories'));
-    }
+        $product->load(['sizes', 'images']);
 
-    public function update(Request $request, Product $product)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
-            'description' => 'nullable|string',
-            'category_id' => 'required|exists:categories,id',
-            'base_price' => 'required|numeric|min:0',
-            'cover_image' => 'nullable|image|max:4096',
-            'size_names' => 'nullable|array',
-            'size_prices' => 'nullable|array',
-            'finishing_names' => 'nullable|array',
-            'finishing_prices' => 'nullable|array',
-            'material_names' => 'nullable|array',
-            'material_prices' => 'nullable|array',
+        return view('admin.products.form', [
+            'product' => $product,
+            'categories' => Category::ordered()->get(),
         ]);
-        
-        if (empty($validated['description'])) {
-            $validated['description'] = null;
-        }
-        
-        $sizes = [];
-        if ($request->has('size_names') && $request->has('size_prices')) {
-            $sizeNames = $request->input('size_names');
-            $sizePrices = $request->input('size_prices');
-            for ($i = 0; $i < count($sizeNames); $i++) {
-                if (!empty($sizeNames[$i]) && !empty($sizePrices[$i])) {
-                    $sizes[] = [
-                        'name' => $sizeNames[$i],
-                        'price' => (float) $sizePrices[$i]
-                    ];
-                }
-            }
-        }
-        
-        $finishings = [];
-        if ($request->has('finishing_names') && $request->has('finishing_prices')) {
-            $finishingNames = $request->input('finishing_names');
-            $finishingPrices = $request->input('finishing_prices');
-            for ($i = 0; $i < count($finishingNames); $i++) {
-                if (!empty($finishingNames[$i]) && !empty($finishingPrices[$i])) {
-                    $finishings[] = [
-                        'name' => $finishingNames[$i],
-                        'price' => (float) $finishingPrices[$i]
-                    ];
-                }
-            }
-        }
-        
-        $materials = [];
-        if ($request->has('material_names') && $request->has('material_prices')) {
-            $materialNames = $request->input('material_names');
-            $materialPrices = $request->input('material_prices');
-            for ($i = 0; $i < count($materialNames); $i++) {
-                if (!empty($materialNames[$i]) && !empty($materialPrices[$i])) {
-                    $materials[] = [
-                        'name' => $materialNames[$i],
-                        'price' => (float) $materialPrices[$i]
-                    ];
-                }
-            }
-        }
-        
-        if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request->file('cover_image')->store('products', 'public');
-        } else {
-            unset($validated['cover_image']);
-        }
-        
-        $validated['sizes'] = $sizes;
-        $validated['finishings'] = $finishings;
-        $validated['materials'] = $materials;
-        
-        try {
-            $product->update($validated);
-            return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diupdate!');
-        } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['error' => 'Gagal mengupdate produk: ' . $e->getMessage()]);
-        }
     }
 
-    public function destroy($id)
+    public function update(ProductRequest $request, Product $product)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus.');
+        DB::transaction(function () use ($request, $product) {
+            $product->update($this->payload($request, $product));
+            $this->syncRelations($product, $request);
+        });
+
+        return redirect()->route('admin.products.edit', $product)->with('status', 'Perubahan tersimpan.');
     }
-} 
+
+    public function destroy(Product $product)
+    {
+        $name = $product->name;
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('status', "Produk “{$name}” dihapus.");
+    }
+
+    public function toggle(Product $product)
+    {
+        $product->update(['is_active' => ! $product->is_active]);
+
+        return back()->with('status', $product->is_active
+            ? "“{$product->name}” sekarang tampil di website."
+            : "“{$product->name}” disembunyikan dari website.");
+    }
+
+    public function destroyImage(Product $product, ProductImage $image)
+    {
+        abort_unless($image->product_id === $product->id, 404);
+        $image->delete();
+
+        return back()->with('status', 'Foto dihapus dari galeri.');
+    }
+
+    private function payload(ProductRequest $request, ?Product $product = null): array
+    {
+        $data = $request->safe()->only([
+            'name', 'category_id', 'short_description', 'description',
+            'min_order', 'production_time', 'is_featured', 'is_active',
+        ]);
+        $data['sort_order'] = (int) $request->input('sort_order', 0);
+        $data['slug'] = $request->filled('slug')
+            ? $request->input('slug')
+            : Product::uniqueSlug($data['name'], $product?->id);
+        $data['specifications'] = collect($request->validated('specs', []))
+            ->map(fn ($s) => ['label' => trim($s['label']), 'value' => trim($s['value'])])
+            ->values()->all();
+
+        if ($request->hasFile('cover_image')) {
+            $this->images->delete($product?->cover_image);
+            $data['cover_image'] = $this->images->store($request->file('cover_image'));
+        }
+
+        return $data;
+    }
+
+    private function syncRelations(Product $product, ProductRequest $request): void
+    {
+        // Ukuran: ganti seluruhnya sesuai urutan di form.
+        $product->sizes()->delete();
+        foreach ($request->validated('sizes', []) as $i => $size) {
+            $product->sizes()->create([
+                'label' => $size['label'],
+                'dimension' => $size['dimension'] ?? null,
+                'price_min' => $size['price_min'],
+                'price_max' => $size['price_max'] ?? null,
+                'unit' => $size['unit'],
+                'note' => $size['note'] ?? null,
+                'sort_order' => $i,
+            ]);
+        }
+
+        // Urutan foto galeri yang sudah ada.
+        foreach ((array) $request->input('image_order', []) as $id => $order) {
+            $product->images()->whereKey($id)->update(['sort_order' => (int) $order]);
+        }
+
+        // Foto galeri baru.
+        $next = (int) $product->images()->max('sort_order') + 1;
+        foreach ($request->file('gallery', []) as $file) {
+            $product->images()->create([
+                'path' => $this->images->store($file),
+                'alt' => $product->name,
+                'sort_order' => $next++,
+            ]);
+        }
+    }
+}
