@@ -19,6 +19,12 @@ class ImageService
     public function store(UploadedFile $file, string $dir = 'products'): string
     {
         $disk = Storage::disk('public');
+
+        // Tanpa ekstensi GD (misal belum diaktifkan di php.ini), simpan file apa adanya.
+        if (! extension_loaded('gd')) {
+            return $file->store($dir, 'public');
+        }
+
         $source = $this->load($file->getRealPath());
 
         if (! $source) {
