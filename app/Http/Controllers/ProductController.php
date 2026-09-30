@@ -21,7 +21,7 @@ class ProductController extends Controller
                 ->where('name', 'like', "%{$search}%")
                 ->orWhere('short_description', 'like', "%{$search}%")))
             ->ordered()
-            ->paginate(12)
+            ->paginate(24)
             ->withQueryString();
 
         return view('pages.products.index', compact('products', 'categories', 'activeCategory', 'search'));
