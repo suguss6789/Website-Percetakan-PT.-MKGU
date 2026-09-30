@@ -38,14 +38,6 @@
                     <a href="{{ route('products.index') }}" class="btn-primary">Lihat Produk & Harga <x-icon name="arrow-right" class="h-4 w-4" /></a>
                     <a href="{{ wa_link('Halo MKGU, saya ingin konsultasi cetak.') }}" target="_blank" rel="noopener" class="btn-outline"><x-icon name="whatsapp" class="h-4 w-4" /> Konsultasi Gratis</a>
                 </div>
-                <dl class="mt-12 grid max-w-lg grid-cols-3 border-t border-line pt-5">
-                    @foreach ($categories as $cat)
-                        <div @class(['pr-3', 'border-l border-line pl-4' => ! $loop->first])>
-                            <dt class="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft">0{{ $loop->iteration }}</dt>
-                            <dd class="mt-1 text-sm font-semibold leading-snug">{{ $cat->name }}</dd>
-                        </div>
-                    @endforeach
-                </dl>
             </div>
 
             {{-- "Meja cetak": hasil kerja yang ditumpuk --}}
@@ -75,8 +67,8 @@
                     <ol class="mt-2 space-y-1.5 text-ink-muted">
                         <li class="flex justify-between"><span>Konsultasi</span><span class="text-brand-green-deep">✓</span></li>
                         <li class="flex justify-between"><span>Proof desain</span><span class="text-brand-green-deep">✓</span></li>
-                        <li class="flex justify-between"><span>Cetak</span><span class="text-ink">▢</span></li>
-                        <li class="flex justify-between"><span>Siap ambil</span><span class="text-ink">▢</span></li>
+                        <li class="flex justify-between"><span>Cetak</span><span class="text-brand-green-deep">✓</span></li>
+                        <li class="flex justify-between"><span>Siap ambil</span><span class="text-brand-green-deep">✓</span></li>
                     </ol>
                 </div>
             </div>
@@ -177,5 +169,4 @@
         </div>
     </section>
 
-    @include('partials.cta')
 @endsection

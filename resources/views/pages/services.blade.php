@@ -62,5 +62,4 @@
         </section>
     @endforeach
 
-    <div class="pt-4">@include('partials.cta')</div>
 @endsection
