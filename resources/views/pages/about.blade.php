@@ -19,19 +19,8 @@
         </div>
     </section>
 
-    {{-- Strip foto hasil kerja --}}
-    <section class="overflow-hidden border-y border-line bg-white py-10" aria-label="Contoh hasil kerja">
-        <div class="flex gap-6 px-4 sm:justify-center">
-            @foreach (['buku5' => 'Buku panduan', 'brosur2' => 'Brosur lipat tiga', 'bantal_leher' => 'Bantal leher promosi', 'tas' => 'Tas spunbond', 'topi4' => 'Topi bordir'] as $file => $alt)
-                <figure class="w-44 shrink-0 bg-paper p-2 sm:w-52" style="transform: rotate({{ [-2, 1.5, -1, 2, -1.5][$loop->index] }}deg)">
-                    <img src="{{ asset("assets/portfolio/{$file}.webp") }}" alt="{{ $alt }}" loading="lazy" class="aspect-square w-full object-cover">
-                    <figcaption class="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted">{{ $alt }}</figcaption>
-                </figure>
-            @endforeach
-        </div>
-    </section>
 
-    <section class="py-14 lg:py-20">
+    <section class="border-t border-line py-14 lg:py-20">
         <div class="container-page grid gap-10 lg:grid-cols-12">
             <div class="lg:col-span-4"><x-section-heading number="01" label="Cerita kami" title="Siapa kami" /></div>
             <div class="prose-mkgu text-lg leading-relaxed lg:col-span-7 lg:col-start-6">

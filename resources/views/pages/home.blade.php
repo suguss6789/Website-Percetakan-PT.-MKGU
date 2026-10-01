@@ -46,16 +46,16 @@
 
                 <figure class="sheet crop-frame absolute left-[4%] top-[6%] w-[44%] bg-white p-2.5 shadow-[0_18px_40px_-20px_rgba(27,31,26,.35)]" style="--r:-5deg;animation-delay:.05s">
                     <span class="crop-b"></span>
-                    <img src="{{ asset('assets/portfolio/buku1.webp') }}" alt="Sampul buku cetak full color" class="aspect-[3/4] w-full object-cover" width="160" height="215">
+                    <img src="{{ asset('assets/portfolio/buku1.webp') }}" alt="Sampul buku cetak full color" class="aspect-[3/4] w-full object-cover" width="620" height="860">
                 </figure>
                 <figure class="sheet absolute right-[2%] top-[2%] w-[56%] bg-white p-2.5 shadow-[0_18px_40px_-20px_rgba(27,31,26,.35)]" style="--r:3.5deg;animation-delay:.18s">
-                    <img src="{{ asset('assets/portfolio/brosur2.webp') }}" alt="Brosur lipat tiga" class="aspect-[4/3] w-full object-cover" width="260" height="194">
+                    <img src="{{ asset('assets/portfolio/brosur2.webp') }}" alt="Brosur lipat tiga" class="aspect-[4/3] w-full object-cover" width="1000" height="746">
                 </figure>
                 <figure class="sheet absolute bottom-[10%] left-[18%] w-[40%] bg-white p-2.5 shadow-[0_18px_40px_-20px_rgba(27,31,26,.35)]" style="--r:2deg;animation-delay:.3s">
-                    <img src="{{ asset('assets/portfolio/topi4.webp') }}" alt="Topi bordir custom" class="aspect-square w-full object-cover" width="252" height="263">
+                    <img src="{{ asset('assets/portfolio/topi4.webp') }}" alt="Topi bordir custom" class="aspect-square w-full object-cover" width="1000" height="1044">
                 </figure>
                 <figure class="sheet absolute bottom-[4%] right-[4%] w-[40%] bg-white p-2.5 shadow-[0_18px_40px_-20px_rgba(27,31,26,.35)]" style="--r:-4deg;animation-delay:.42s">
-                    <img src="{{ asset('assets/portfolio/mug.webp') }}" alt="Mug dengan logo" class="aspect-[4/3] w-full object-cover" width="288" height="130">
+                    <img src="{{ asset('assets/portfolio/mug.webp') }}" alt="Mug dengan logo" class="aspect-[4/3] w-full object-cover" width="1000" height="451">
                 </figure>
 
                 {{-- Job ticket --}}
