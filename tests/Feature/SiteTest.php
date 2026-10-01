@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Partner;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -67,7 +68,7 @@ class SiteTest extends TestCase
     {
         $this->actingAs($this->admin());
         $p = Product::first();
-        foreach (['/admin', '/admin/products', '/admin/products/create', "/admin/products/{$p->id}/edit", '/admin/categories', '/admin/categories/create', '/admin/settings', '/admin/account'] as $url) {
+        foreach (['/admin/partners', '/admin/partners/create', '/admin', '/admin/products', '/admin/products/create', "/admin/products/{$p->id}/edit", '/admin/categories', '/admin/categories/create', '/admin/settings', '/admin/account'] as $url) {
             $this->get($url)->assertOk();
         }
     }
@@ -177,5 +178,36 @@ class SiteTest extends TestCase
             'password' => 'passwordbaru123', 'password_confirmation' => 'passwordbaru123',
         ])->assertSessionHasNoErrors();
         $this->assertTrue(\Hash::check('passwordbaru123', $admin->fresh()->password));
+    }
+
+    public function test_partners_shown_and_managed(): void
+    {
+        Storage::fake('public');
+        $this->get('/')->assertSee('Dipercaya oleh')->assertSee('BPOM')->assertSee('SKIN+');
+        $this->get('/tentang-kami')->assertSee('Huawei');
+
+        $this->actingAs($this->admin());
+        $this->post('/admin/partners', [
+            'name' => 'Bank Contoh', 'description' => 'Perbankan', 'is_active' => '1',
+            'logo' => UploadedFile::fake()->image('logo.png', 1200, 400),
+        ])->assertSessionHasNoErrors();
+        $p = Partner::where('name', 'Bank Contoh')->firstOrFail();
+        Storage::disk('public')->assertExists($p->logo);
+        $this->assertSame(600, getimagesize(Storage::disk('public')->path($p->logo))[0]);
+        $this->get('/')->assertSee('Logo Bank Contoh', false);
+
+        $this->put("/admin/partners/{$p->id}", ['name' => 'Bank Contoh', 'remove_logo' => '1'])->assertSessionHasNoErrors();
+        $old = $p->logo;
+        $p->refresh();
+        $this->assertNull($p->logo);
+        $this->assertFalse($p->is_active);
+        Storage::disk('public')->assertMissing($old);
+        $this->get('/')->assertDontSee('Bank Contoh');
+
+        $this->delete("/admin/partners/{$p->id}");
+        $this->assertModelMissing($p);
+
+        Partner::query()->update(['is_active' => false]);
+        $this->get('/')->assertDontSee('Dipercaya oleh');
     }
 }

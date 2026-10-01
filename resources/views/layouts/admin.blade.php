@@ -3,6 +3,7 @@
         ['admin.dashboard', 'Dashboard', 'home', 'admin.dashboard'],
         ['admin.products.index', 'Produk', 'box', 'admin.products.*'],
         ['admin.categories.index', 'Kategori', 'folder', 'admin.categories.*'],
+        ['admin.partners.index', 'Partner', 'star', 'admin.partners.*'],
         ['admin.settings.edit', 'Profil & Kontak', 'settings', 'admin.settings.*'],
         ['admin.account.edit', 'Akun Saya', 'user', 'admin.account.*'],
     ];

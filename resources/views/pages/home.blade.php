@@ -119,6 +119,8 @@
         </section>
     @endif
 
+    @include('partials.partners')
+
     {{-- TENTANG SINGKAT --}}
     <section class="bg-paper-dark py-16 lg:py-24">
         <div class="container-page grid gap-12 lg:grid-cols-12">

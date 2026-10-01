@@ -16,7 +16,7 @@ class ImageService
     public const MAX_WIDTH = 1600;
     public const THUMB_WIDTH = 600;
 
-    public function store(UploadedFile $file, string $dir = 'products'): string
+    public function store(UploadedFile $file, string $dir = 'products', int $maxWidth = self::MAX_WIDTH): string
     {
         $disk = Storage::disk('public');
 
@@ -37,7 +37,7 @@ class ImageService
         $name = Str::random(32) . '.' . $ext;
         $path = trim($dir, '/') . '/' . $name;
 
-        $disk->put($path, $this->encode($this->resize($source, self::MAX_WIDTH), $useWebp));
+        $disk->put($path, $this->encode($this->resize($source, $maxWidth), $useWebp));
         $disk->put(thumb_path($path), $this->encode($this->resize($source, self::THUMB_WIDTH), $useWebp));
 
         imagedestroy($source);
