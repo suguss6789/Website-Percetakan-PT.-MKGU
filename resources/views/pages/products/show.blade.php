@@ -57,7 +57,7 @@
                                     <button type="button" @click="go(active + 1)" class="pointer-events-auto inline-flex h-11 w-11 items-center justify-center rounded-full border border-line bg-paper/90 hover:bg-white" aria-label="Gambar berikutnya"><x-icon name="chevron-right" /></button>
                                 </div>
                             </template>
-                            <span x-show="images.length > 1" class="absolute bottom-3 right-3 bg-ink px-2 py-1 font-mono text-[11px] text-paper" x-text="(active + 1) + ' / ' + images.length"></span>
+                            <span x-show="images.length > 1" class="absolute bottom-3 right-3 bg-ink px-2 py-1 font-mono text-[0.6875rem] text-paper" x-text="(active + 1) + ' / ' + images.length"></span>
                         </div>
                         <div x-show="images.length > 1" class="mt-4 flex gap-3 overflow-x-auto pb-1">
                             <template x-for="(img, i) in images" :key="'t' + i">
@@ -81,7 +81,7 @@
             {{-- Info --}}
             <div class="lg:col-span-5">
                 <p class="label-mono text-brand-green-deep">{{ $product->category->name }}</p>
-                <h1 class="mt-2 text-4xl font-extrabold sm:text-5xl">{{ $product->name }}</h1>
+                <h1 class="mt-2 text-fluid-h2 font-extrabold">{{ $product->name }}</h1>
                 <p class="mt-4 text-lg text-ink-muted">{{ $product->short_description }}</p>
 
                 <div class="mt-7 border-y border-line py-5">
@@ -125,7 +125,7 @@
                     <fieldset class="mt-8">
                         <legend class="sr-only">Ukuran</legend>
                         {{-- Kepala tabel (desktop) --}}
-                        <div class="hidden grid-cols-[28px_1.1fr_1fr_1.4fr] gap-4 border-b border-ink pb-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted sm:grid">
+                        <div class="hidden grid-cols-[28px_1.1fr_1fr_1.4fr] gap-4 border-b border-ink pb-3 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted sm:grid">
                             <span></span><span>Ukuran</span><span>Dimensi</span><span class="text-right">Kisaran harga</span>
                         </div>
                         @foreach ($product->sizes as $size)
@@ -137,7 +137,7 @@
                                     @if ($size->note)<span class="block text-sm font-normal text-ink-muted">{{ $size->note }}</span>@endif
                                 </span>
                                 <span class="col-start-2 font-mono text-sm text-ink-muted sm:col-start-auto">{{ $size->dimension }}</span>
-                                <span class="col-start-2 font-mono text-[15px] sm:col-start-auto sm:text-right">{{ $size->price_label }} <span class="text-ink-muted">/ {{ \Illuminate\Support\Str::after($size->unit, 'per ') }}</span></span>
+                                <span class="col-start-2 font-mono text-[0.9375rem] sm:col-start-auto sm:text-right">{{ $size->price_label }} <span class="text-ink-muted">/ {{ \Illuminate\Support\Str::after($size->unit, 'per ') }}</span></span>
                             </label>
                         @endforeach
                     </fieldset>
@@ -154,9 +154,9 @@
                     <x-section-heading number="02" label="Spesifikasi" title="Detail teknis" />
                     <dl class="mt-8 border-t border-ink">
                         @foreach ($product->specifications as $spec)
-                            <div class="grid grid-cols-[120px_1fr] gap-4 border-b border-line py-4">
-                                <dt class="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted">{{ $spec['label'] }}</dt>
-                                <dd class="text-[15px]">{{ $spec['value'] }}</dd>
+                            <div class="grid grid-cols-[minmax(6rem,8rem)_minmax(0,1fr)] gap-4 border-b border-line py-4">
+                                <dt class="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted">{{ $spec['label'] }}</dt>
+                                <dd class="text-[0.9375rem]">{{ $spec['value'] }}</dd>
                             </div>
                         @endforeach
                     </dl>
@@ -169,7 +169,7 @@
     <section class="py-14 lg:py-20">
         <div class="container-page grid gap-10 lg:grid-cols-12">
             <div class="lg:col-span-4"><x-section-heading number="03" label="Deskripsi" title="Tentang produk ini" /></div>
-            <div class="prose-mkgu text-[17px] leading-relaxed lg:col-span-7 lg:col-start-6">
+            <div class="prose-mkgu text-[1.0625rem] leading-relaxed lg:col-span-7 lg:col-start-6">
                 @foreach (preg_split("/\n\s*\n/", trim($product->description)) as $para)
                     <p>{!! nl2br(e($para)) !!}</p>
                 @endforeach
@@ -182,10 +182,10 @@
         <section class="border-t border-line py-14 lg:py-20">
             <div class="container-page">
                 <div class="flex items-end justify-between gap-6">
-                    <h2 class="text-3xl font-bold">Lainnya di {{ $product->category->name }}</h2>
+                    <h2 class="text-fluid-h2 font-bold">Lainnya di {{ $product->category->name }}</h2>
                     <a href="{{ route('products.index', ['kategori' => $product->category->slug]) }}" class="hidden font-semibold text-brand-green-deep hover:underline sm:inline">Lihat semua →</a>
                 </div>
-                <div class="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4">
                     @foreach ($related as $item)<x-product-card :product="$item" />@endforeach
                 </div>
             </div>

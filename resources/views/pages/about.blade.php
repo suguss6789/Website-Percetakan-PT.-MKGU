@@ -7,7 +7,7 @@
     <section class="container-page pb-14 pt-10 lg:pb-20 lg:pt-14">
         <nav class="label-mono"><a href="{{ route('home') }}" class="hover:text-ink">Beranda</a> / <span class="text-ink">Tentang</span></nav>
         <div class="mt-8 grid gap-10 lg:grid-cols-12">
-            <h1 class="text-4xl font-extrabold sm:text-6xl lg:col-span-7">Percetakan kecil yang mengerjakan <span class="text-brand-green-deep">banyak hal</span> dengan teliti.</h1>
+            <h1 class="text-fluid-h1 font-extrabold lg:col-span-7">Percetakan kecil yang mengerjakan <span class="text-brand-green-deep">banyak hal</span> dengan teliti.</h1>
             <div class="lg:col-span-4 lg:col-start-9 lg:pt-4">
                 <p class="label-mono">Bagian dari</p>
                 <p class="mt-2 font-display text-2xl font-bold">{{ setting('company_parent') }}</p>
@@ -43,7 +43,7 @@
                     @foreach (array_filter(array_map('trim', explode("\n", (string) setting('mission')))) as $item)
                         <li class="flex gap-5 border-b border-line py-5">
                             <span class="font-mono text-sm text-brand-green-deep">0{{ $loop->iteration }}</span>
-                            <span class="text-[17px]">{{ $item }}</span>
+                            <span class="text-[1.0625rem]">{{ $item }}</span>
                         </li>
                     @endforeach
                 </ol>
@@ -69,7 +69,7 @@
                     ] as [$t, $d])
                         <div class="border-t-[3px] border-brand-yellow pt-4">
                             <h3 class="text-xl font-bold">{{ $t }}</h3>
-                            <p class="mt-2 text-[15px] text-ink-muted">{{ $d }}</p>
+                            <p class="mt-2 text-[0.9375rem] text-ink-muted">{{ $d }}</p>
                         </div>
                     @endforeach
                 </div>

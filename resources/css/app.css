@@ -7,8 +7,13 @@
 @tailwind utilities;
 
 @layer base {
-    html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
-    body { @apply bg-paper font-sans text-ink antialiased; font-size: 16.5px; line-height: 1.6; }
+    /* Root font fluid: 16px di HP/laptop, naik perlahan sampai ±19–20px di monitor besar.
+       Semua ukuran berbasis rem (teks, jarak, lebar konten) ikut menyesuaikan. */
+    html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; font-size: clamp(16px, 0.25vw + 12.8px, 20px); }
+    body { @apply bg-paper font-sans text-ink antialiased; font-size: 1.03rem; line-height: 1.6; overflow-x: clip; }
+    img, svg, video, iframe { max-width: 100%; }
+    /* Isi grid boleh menyusut; mencegah teks panjang mendorong layout keluar layar */
+    .grid > * { min-width: 0; }
     h1, h2, h3, h4 { @apply font-display text-ink; letter-spacing: -0.02em; line-height: 1.08; }
     ::selection { @apply bg-brand-yellow text-ink; }
     :focus-visible { outline: 3px solid theme('colors.brand.yellow'); outline-offset: 2px; }
@@ -16,13 +21,13 @@
 }
 
 @layer components {
-    .container-page { @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-8; }
+    .container-page { @apply mx-auto w-full max-w-page; padding-inline: clamp(1rem, 3.5vw, 3rem); }
 
     /* Label mono ala job ticket percetakan */
-    .label-mono { @apply font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted; }
+    .label-mono { @apply font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-ink-muted; }
 
     /* Tombol */
-    .btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded px-5 py-2.5 text-[15px] font-semibold transition duration-150; }
+    .btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded px-5 py-2.5 text-[0.9375rem] font-semibold transition duration-150; }
     .btn-primary { @apply btn bg-brand-green-deep text-white hover:-translate-y-0.5 hover:bg-brand-green-ink; box-shadow: inset 0 -3px 0 0 transparent; }
     .btn-primary:hover { box-shadow: inset 0 -3px 0 0 theme('colors.brand.yellow'); }
     .btn-wa { @apply btn bg-brand-orange text-ink hover:-translate-y-0.5 hover:bg-[#f36a3c]; }
@@ -48,10 +53,14 @@
 
     /* Placeholder "lembar kosong" untuk produk tanpa foto */
     .sheet-blank {
-        @apply relative flex h-full w-full flex-col justify-between overflow-hidden bg-white p-5;
+        @apply relative flex h-full w-full flex-col justify-between overflow-hidden bg-white p-3 sm:p-5;
         background-image: radial-gradient(circle at 1px 1px, rgba(27,31,26,.07) 1px, transparent 0);
         background-size: 14px 14px;
     }
+
+    /* Kolase hero: container query supaya kotak Alur Kerja ikut skala kolase */
+    .hero-collage { container-type: inline-size; }
+    .hero-ticket { font-size: clamp(8px, 2.05cqw, 12.5px); letter-spacing: 0.1em; padding: 4.2cqw 4cqw; }
 
     .card-hover { @apply transition duration-200; }
     .card-hover:hover { transform: translateY(-3px); }

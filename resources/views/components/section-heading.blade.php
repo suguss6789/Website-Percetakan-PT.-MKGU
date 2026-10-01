@@ -6,8 +6,8 @@
             {{ $label }}
         </p>
     @endif
-    <h2 class="mt-3 text-3xl font-bold sm:text-[42px]">{{ $title }}</h2>
+    <h2 class="mt-3 text-fluid-h2 font-bold">{{ $title }}</h2>
     @if ($slot->isNotEmpty())
-        <div class="mt-4 text-[17px] text-ink-muted">{{ $slot }}</div>
+        <div class="mt-4 text-[1.0625rem] text-ink-muted">{{ $slot }}</div>
     @endif
 </div>

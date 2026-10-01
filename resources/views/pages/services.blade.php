@@ -16,7 +16,7 @@
     <section class="container-page pb-12 pt-10 lg:pt-14">
         <nav class="label-mono"><a href="{{ route('home') }}" class="hover:text-ink">Beranda</a> / <span class="text-ink">Layanan</span></nav>
         <div class="mt-8 grid gap-8 lg:grid-cols-12 lg:items-end">
-            <h1 class="text-4xl font-extrabold sm:text-6xl lg:col-span-7">Satu tempat untuk cetak dan promosi.</h1>
+            <h1 class="text-fluid-h1 font-extrabold lg:col-span-7">Satu tempat untuk cetak dan promosi.</h1>
             <p class="text-lg text-ink-muted lg:col-span-4 lg:col-start-9">Pilih lini yang sesuai dengan jumlah dan waktu Anda. Kalau ragu, ceritakan kebutuhannya dan kami sarankan yang paling masuk akal.</p>
         </div>
         <nav class="mt-10 flex flex-wrap gap-2" aria-label="Loncat ke layanan">
@@ -41,7 +41,7 @@
                 </div>
                 <div @class(['lg:col-span-6', 'lg:col-start-7' => $loop->odd, 'lg:order-1' => $loop->even])>
                     <p class="label-mono"><span class="text-brand-green-deep">0{{ $loop->iteration }}</span> · {{ $cat->products->count() }} produk</p>
-                    <h2 class="mt-3 text-3xl font-bold sm:text-5xl">{{ $cat->name }}</h2>
+                    <h2 class="mt-3 text-fluid-h1 font-bold">{{ $cat->name }}</h2>
                     <p class="mt-4 text-lg text-ink-muted">{{ $cat->description }} {{ $extra[$cat->slug] ?? '' }}</p>
 
                     @if ($cat->products->isNotEmpty())
@@ -50,7 +50,7 @@
                                 <li>
                                     <a href="{{ route('products.show', $p) }}" class="group flex items-center justify-between gap-4 border-b border-line py-4 hover:bg-paper">
                                         <span class="font-semibold group-hover:text-brand-green-deep">{{ $p->name }}</span>
-                                        <span class="shrink-0 font-mono text-sm text-ink-muted">{{ $p->price_range_label ?? 'Sesuai permintaan' }}</span>
+                                        <span class="text-right font-mono text-sm text-ink-muted">{{ $p->price_range_label ?? 'Sesuai permintaan' }}</span>
                                     </a>
                                 </li>
                             @endforeach

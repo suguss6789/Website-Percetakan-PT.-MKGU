@@ -43,7 +43,7 @@
 
         <section class="border border-line bg-white">
             <h2 class="border-b border-line px-5 py-4 text-lg font-bold">Perlu dilengkapi</h2>
-            <div class="space-y-5 p-5 text-[15px]">
+            <div class="space-y-5 p-5 text-[0.9375rem]">
                 <div>
                     <p class="label-mono">Belum ada foto ({{ $noImage->count() }})</p>
                     <ul class="mt-2 space-y-1">

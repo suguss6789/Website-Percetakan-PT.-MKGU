@@ -7,7 +7,7 @@
         <div class="container-page">
             <div class="max-w-2xl">
                 <p class="label-mono">Dipercaya oleh</p>
-                <h2 id="partner-heading" class="mt-3 text-3xl font-bold sm:text-[42px]">Instansi dan perusahaan yang pernah bekerja sama dengan kami.</h2>
+                <h2 id="partner-heading" class="mt-3 text-fluid-h2 font-bold">Instansi dan perusahaan yang pernah bekerja sama dengan kami.</h2>
             </div>
 
             <ul class="mt-10 grid grid-cols-2 border-l border-t border-line sm:grid-cols-3 {{ $cols }}">
@@ -25,7 +25,7 @@
                                 @endif
                             </span>
                             @if ($partner->description)
-                                <span class="font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-ink-muted">{{ $partner->description }}</span>
+                                <span class="font-mono text-[0.625rem] uppercase leading-relaxed tracking-[0.12em] text-ink-muted">{{ $partner->description }}</span>
                             @endif
                         </{{ $tag }}>
                     </li>

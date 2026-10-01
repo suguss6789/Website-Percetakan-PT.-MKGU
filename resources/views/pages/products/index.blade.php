@@ -9,7 +9,7 @@
             <nav class="label-mono" aria-label="Breadcrumb"><a href="{{ route('home') }}" class="hover:text-ink">Beranda</a> / <span class="text-ink">Produk</span></nav>
             <div class="mt-6 grid gap-8 lg:grid-cols-12 lg:items-end">
                 <div class="lg:col-span-7">
-                    <h1 class="text-4xl font-extrabold sm:text-6xl">{{ $activeCategory?->name ?? 'Produk & kisaran harga' }}</h1>
+                    <h1 class="text-fluid-h1 font-extrabold">{{ $activeCategory?->name ?? 'Produk & kisaran harga' }}</h1>
                     <p class="mt-4 max-w-xl text-lg text-ink-muted">
                         {{ $activeCategory?->description ?? 'Harga ditulis sebagai kisaran per ukuran. Harga pasti tergantung jumlah, bahan, dan finishing yang dipilih.' }}
                     </p>
@@ -20,7 +20,7 @@
                     <div class="relative">
                         <x-icon name="search" class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-ink-soft" />
                         <input id="q" name="q" value="{{ $search }}" type="search" placeholder="Cari: brosur, kaos, kalender…"
-                            class="h-14 w-full rounded border border-ink/70 bg-white pl-12 pr-28 text-[16px] placeholder:text-ink-soft focus:border-brand-green-deep focus:outline-none focus:ring-2 focus:ring-brand-green/25">
+                            class="h-14 w-full rounded border border-ink/70 bg-white pl-12 pr-28 text-base placeholder:text-ink-soft focus:border-brand-green-deep focus:outline-none focus:ring-2 focus:ring-brand-green/25">
                         <button class="btn-primary absolute right-1.5 top-1.5 h-11 min-h-0 px-4">Cari</button>
                     </div>
                 </form>
@@ -28,7 +28,7 @@
         </div>
         <div class="container-page">
             <div class="-mb-px flex gap-1 overflow-x-auto [scrollbar-width:none]" role="tablist" aria-label="Kategori">
-                @php $tab = 'shrink-0 border-b-[3px] px-4 py-3 text-[15px] font-semibold transition-colors'; @endphp
+                @php $tab = 'shrink-0 border-b-[3px] px-4 py-3 text-[0.9375rem] font-semibold transition-colors'; @endphp
                 <a href="{{ route('products.index', array_filter(['q' => $search])) }}" @class([$tab, 'border-brand-yellow text-ink' => ! $activeCategory, 'border-transparent text-ink-muted hover:text-ink' => $activeCategory])>Semua</a>
                 @foreach ($categories as $cat)
                     @php $on = $activeCategory?->is($cat); @endphp
@@ -55,7 +55,7 @@
                     <a href="{{ wa_link('Halo MKGU, apakah bisa cetak ' . ($search ?: 'produk') . '?') }}" target="_blank" rel="noopener" class="btn-wa mt-6"><x-icon name="whatsapp" class="h-4 w-4" /> Tanyakan via WhatsApp</a>
                 </div>
             @else
-                <div class="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-[repeat(auto-fill,minmax(13.5rem,1fr))] sm:gap-x-6 sm:gap-y-14">
                     @foreach ($products as $product)
                         <x-product-card :product="$product" />
                     @endforeach

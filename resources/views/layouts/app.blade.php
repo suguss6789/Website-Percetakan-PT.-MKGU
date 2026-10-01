@@ -40,8 +40,8 @@
     <a href="#konten" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-brand-yellow focus:px-4 focus:py-2 focus:font-semibold">Lewati ke konten</a>
 
     {{-- Strip info ala job ticket --}}
-    <div class="hidden border-b border-line bg-paper-dark md:block">
-        <div class="container-page flex h-9 items-center justify-between gap-6 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-muted">
+    <div class="hidden border-b border-line bg-paper-dark lg:block">
+        <div class="container-page flex h-9 items-center justify-between gap-6 whitespace-nowrap font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-muted">
             <span class="flex items-center gap-2"><x-icon name="map-pin" class="h-3.5 w-3.5" /> {{ \Illuminate\Support\Str::before(setting('address', ''), ',') }}, Jakarta Timur</span>
             <span class="flex items-center gap-5">
                 <span class="flex items-center gap-2"><x-icon name="clock" class="h-3.5 w-3.5" /> {{ setting('hours_weekday') }}</span>
@@ -60,7 +60,7 @@
             <nav class="hidden items-center gap-8 lg:flex" aria-label="Menu utama">
                 @foreach ($nav as [$route, $label])
                     <a href="{{ route($route) }}" @class([
-                        'relative py-1 text-[15px] font-semibold transition-colors',
+                        'relative py-1 text-[0.9375rem] font-semibold transition-colors',
                         'text-ink after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[3px] after:bg-brand-yellow' => $isActive($route),
                         'text-ink-muted hover:text-ink' => ! $isActive($route),
                     ]) @if($isActive($route)) aria-current="page" @endif>{{ $label }}</a>
@@ -90,7 +90,7 @@
                 @foreach ($nav as $i => [$route, $label])
                     <a href="{{ route($route) }}" class="flex items-baseline gap-4 border-b border-line py-4">
                         <span class="font-mono text-xs text-ink-soft">0{{ $i + 1 }}</span>
-                        <span @class(['font-display text-4xl font-bold', 'text-brand-green-deep' => $isActive($route)])>{{ $label }}</span>
+                        <span @class(['font-display text-[clamp(2rem,1.4rem+4vw,2.75rem)] font-bold', 'text-brand-green-deep' => $isActive($route)])>{{ $label }}</span>
                     </a>
                 @endforeach
             </nav>
@@ -113,13 +113,13 @@
                 <div class="inline-block rounded bg-paper p-3">
                     <img src="{{ asset('assets/image/logo-transparan.png') }}" alt="{{ $siteName }}" class="h-12 w-auto" loading="lazy">
                 </div>
-                <p class="mt-6 max-w-sm text-[15px] leading-relaxed text-paper/70">{{ setting('tagline') }}</p>
-                <p class="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-paper/50">Member of {{ setting('company_parent', 'PT. Mulia Idola Utama') }}</p>
+                <p class="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-paper/70">{{ setting('tagline') }}</p>
+                <p class="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-paper/50">Member of {{ setting('company_parent', 'PT. Mulia Idola Utama') }}</p>
             </div>
 
             <div class="md:col-span-3">
-                <h2 class="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-brand-yellow">Produk</h2>
-                <ul class="mt-4 space-y-2.5 text-[15px]">
+                <h2 class="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-brand-yellow">Produk</h2>
+                <ul class="mt-4 space-y-2.5 text-[0.9375rem]">
                     @foreach ($footerCategories as $cat)
                         <li><a href="{{ route('products.index', ['kategori' => $cat->slug]) }}" class="text-paper/80 hover:text-white hover:underline">{{ $cat->name }}</a></li>
                     @endforeach
@@ -128,8 +128,8 @@
             </div>
 
             <div class="md:col-span-4">
-                <h2 class="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-brand-yellow">Kontak</h2>
-                <ul class="mt-4 space-y-3 text-[15px] text-paper/80">
+                <h2 class="font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-brand-yellow">Kontak</h2>
+                <ul class="mt-4 space-y-3 text-[0.9375rem] text-paper/80">
                     <li class="flex gap-3"><x-icon name="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><a href="{{ setting('maps_link', '#') }}" target="_blank" rel="noopener" class="hover:text-white">{{ setting('address') }}</a></li>
                     <li class="flex gap-3"><x-icon name="whatsapp" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><a href="{{ wa_link() }}" target="_blank" rel="noopener" class="hover:text-white">{{ wa_display() }}</a></li>
                     <li class="flex gap-3"><x-icon name="mail" class="mt-0.5 h-4 w-4 shrink-0 text-paper/50" /><a href="mailto:{{ setting('email') }}" class="hover:text-white">{{ setting('email') }}</a></li>
@@ -158,7 +158,7 @@
         class="fixed bottom-5 right-5 z-30 inline-flex h-14 items-center gap-2 rounded-full bg-brand-orange px-4 text-ink shadow-[0_6px_20px_-6px_rgba(27,31,26,.45)] transition hover:-translate-y-0.5 sm:px-5"
         aria-label="Chat WhatsApp">
         <x-icon name="whatsapp" class="h-6 w-6" />
-        <span class="hidden text-[15px] font-semibold sm:inline">Chat</span>
+        <span class="hidden text-[0.9375rem] font-semibold sm:inline">Chat</span>
     </a>
 
     @stack('scripts')

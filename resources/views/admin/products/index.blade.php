@@ -35,7 +35,7 @@
                 <div class="min-w-0">
                     <p class="truncate font-semibold">
                         {{ $p->name }}
-                        @if ($p->is_featured)<span class="ml-1 bg-brand-yellow px-1.5 py-0.5 align-middle font-mono text-[10px] uppercase tracking-wider">Unggulan</span>@endif
+                        @if ($p->is_featured)<span class="ml-1 bg-brand-yellow px-1.5 py-0.5 align-middle font-mono text-[0.625rem] uppercase tracking-wider">Unggulan</span>@endif
                     </p>
                     <p class="text-sm text-ink-muted">{{ $p->category?->name }} · {{ $p->sizes->count() }} ukuran</p>
                 </div>
