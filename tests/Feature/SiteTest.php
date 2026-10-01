@@ -184,7 +184,7 @@ class SiteTest extends TestCase
     {
         Storage::fake('public');
         $this->get('/')->assertSee('Dipercaya oleh')->assertSee('BPOM')->assertSee('SKIN+');
-        $this->get('/tentang-kami')->assertSee('Huawei');
+        $this->get('/tentang-kami')->assertOk()->assertDontSee('Dipercaya oleh');
 
         $this->actingAs($this->admin());
         $this->post('/admin/partners', [

@@ -6,7 +6,7 @@
     <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <h1 class="text-3xl font-bold">Partner</h1>
-            <p class="mt-1 text-ink-muted">Klien atau mitra yang tampil di bagian “Dipercaya oleh” di beranda dan halaman Tentang.</p>
+            <p class="mt-1 text-ink-muted">Klien atau mitra yang tampil di bagian “Dipercaya oleh” di beranda.</p>
         </div>
         <a href="{{ route('admin.partners.create') }}" class="btn-primary"><x-icon name="plus" class="h-4 w-4" /> Tambah Partner</a>
     </div>

@@ -62,8 +62,6 @@
         </div>
     </section>
 
-    @include('partials.partners')
-
     <section class="py-14 lg:py-20">
         <div class="container-page grid items-center gap-10 lg:grid-cols-12">
             <div class="lg:col-span-3">
